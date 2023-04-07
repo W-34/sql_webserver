@@ -2,14 +2,14 @@
 <head>
 <meta charset="utf-8">
 <title>w34's homework</title>
-<h1>login mysql</h1>
+<h1 style="text-align:center">登录到mysql服务器</h1>
 </head>
-<body>
-<form action="sql.php" method="post">
-username: <input type="text" name="username"><br>
-password: <input type="password" name="password"><hr>
+<body style="background-color:#FFD700;">
+<form action="sql.php" method="post" style="text-align:center" width="300" height="200">
+username: <input type="text" name="username" style="align:center"><br>
+password: <input type="password" name="password"><br>
 
-<input type="submit" value="提交">
+<input type="submit" value="登录" style="align:center">
 </form>
 <?php
 	// 检查是否有错误消息传递
@@ -18,5 +18,7 @@ password: <input type="password" name="password"><hr>
 		echo '<p style="color: red;">' . $error_message . '</p>';
 	}
 	?>
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+版权所有 © w34</div>
 </body>
 </html>

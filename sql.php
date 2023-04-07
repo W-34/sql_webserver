@@ -53,7 +53,7 @@ if ($conn->connect_error) {
     </table>
   </td>
 
-  <td id="Table:video" style="width:1000px;vertical-align:top;">
+  <td id="Table:video" style="width:1100px;vertical-align:top;">
     <?php
     $sql = "select * from video limit 10";
     $result = $conn->query($sql);
@@ -68,11 +68,12 @@ if ($conn->connect_error) {
           <th>date</th>
           <th>channel</th>
           <th>url</th>
+          <th>likes</th>
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> </tr>",
-                $row["id"],$row["title"], $row["author"], $row["date"],$row["channel"],$row["url"]);
+                printf("<tr> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%d</td></tr>",
+                $row["id"],$row["title"], $row["author"], $row["date"],$row["channel"],$row["url"],$row['likes']);
             }
         ?>
       </tbody>
@@ -83,6 +84,7 @@ if ($conn->connect_error) {
         <col width="200">
         <col width="150">
         <col width="200">
+        <col width="100">
       </colgroup>
     </table>
   </td>
