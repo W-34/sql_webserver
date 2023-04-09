@@ -54,9 +54,13 @@ if (isset($_POST['insert_user'])) {
     $repAdd=$_POST['repAdd'];
     $commentTextAdd=$_POST['commentTextAdd'];
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
-    $sql = "INSERT INTO comment (videoID,author,repid,rep,commentText) VALUES ('$videoIDAdd','$authorAdd','$repidAdd','$repAdd','$commentTextAdd')";
+    if($repidAdd==''&&$repAdd==''){
+        $sql = "INSERT INTO comment (videoID,author,commentText) VALUES ('$videoIDAdd','$authorAdd','$commentTextAdd')";
+    }
+    else{
+        $sql = "INSERT INTO comment (videoID,author,repid,rep,commentText) VALUES ('$videoIDAdd','$authorAdd','$repidAdd','$repAdd','$commentTextAdd')";
+    }
     $result=$mysqli->query($sql);
-
     $comment_insert_error_message='ok';
     if($result==false){
     //echo '<p>$mysqli->error</p>';
