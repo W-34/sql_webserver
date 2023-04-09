@@ -1,3 +1,15 @@
+<?php        
+    function str_check( $str )     
+    {     
+        if (!get_magic_quotes_gpc()) // 判断magic_quotes_gpc是否打开     
+        {     
+            $str = addslashes($str); // 进行过滤     
+        }     
+        $str = str_replace("_", "\_", $str); // 把 '_'过滤掉     
+        $str = str_replace("%", "\%", $str); // 把' % '过滤掉     
+        return $str;     
+    }     
+    ?>
 <?php
 if(!isset($_POST['username'])||!isset($_POST['password'])){
     //echo "fail submit";
@@ -12,10 +24,10 @@ else{
 }
 if (isset($_POST['insert_user'])) {
     // 在这里将表单数据插入数据库
-    $usernameAdd=$_POST['usernameAdd'];
-    $passwordAdd=$_POST['passwordAdd'];
-    $nameAdd=$_POST['nameAdd'];
-    $isAuthorAdd=$_POST['isAuthorAdd'];
+    $usernameAdd=str_check($_POST['usernameAdd']);
+    $passwordAdd=str_check($_POST['passwordAdd']);
+    $nameAdd=str_check($_POST['nameAdd']);
+    $isAuthorAdd=str_check($_POST['isAuthorAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
     $sql = "INSERT INTO user (username,passwd,name,isAuthor) VALUES ('$usernameAdd','$passwordAdd','$nameAdd','$isAuthorAdd')";
     $result=$mysqli->query($sql);
@@ -30,10 +42,10 @@ if (isset($_POST['insert_user'])) {
     }
 }else if(isset($_POST['insert_video'])){
     // 在这里将表单数据插入数据库
-    $titleAdd=$_POST['titleAdd'];
-    $authorAdd=$_POST['authorAdd'];
-    $channelAdd=$_POST['channelAdd'];
-    $urlAdd=$_POST['urlAdd'];
+    $titleAdd=str_check($_POST['titleAdd']);
+    $authorAdd=str_check($_POST['authorAdd']);
+    $channelAdd=str_check($_POST['channelAdd']);
+    $urlAdd=str_check($_POST['urlAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
     $sql = "INSERT INTO video (title,author,date,channel,url,likes) VALUES ('$titleAdd','$authorAdd',now(),'$channelAdd','$urlAdd',0)";
     $result=$mysqli->query($sql);
@@ -48,11 +60,11 @@ if (isset($_POST['insert_user'])) {
     }
 }else if(isset($_POST['insert_comment'])){
     // 在这里将表单数据插入数据库
-    $videoIDAdd=$_POST['videoIDAdd'];
-    $authorAdd=$_POST['authorAdd'];
-    $repidAdd=$_POST['repidAdd'];
-    $repAdd=$_POST['repAdd'];
-    $commentTextAdd=$_POST['commentTextAdd'];
+    $videoIDAdd=str_check($_POST['videoIDAdd']);
+    $authorAdd=str_check($_POST['authorAdd']);
+    $repidAdd=str_check($_POST['repidAdd']);
+    $repAdd=str_check($_POST['repAdd']);
+    $commentTextAdd=str_check($_POST['commentTextAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
     if($repidAdd==''&&$repAdd==''){
         $sql = "INSERT INTO comment (videoID,author,commentText) VALUES ('$videoIDAdd','$authorAdd','$commentTextAdd')";
@@ -71,9 +83,9 @@ if (isset($_POST['insert_user'])) {
     }
 }else if(isset($_POST['insert_staff'])){
     // 在这里将表单数据插入数据库
-    $passwdAdd=$_POST['passwdAdd'];
-    $isDeveloperAdd=$_POST['isDeveloperAdd'];
-    $isRunnerAdd=$_POST['isRunnerAdd'];
+    $passwdAdd=str_check($_POST['passwdAdd']);
+    $isDeveloperAdd=str_check($_POST['isDeveloperAdd']);
+    $isRunnerAdd=str_check($_POST['isRunnerAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
     $sql = "INSERT INTO staff (passwd,isDeveloper,isRunner) VALUES ('$passwdAdd','$isDeveloperAdd','$isRunnerAdd')";
     $result=$mysqli->query($sql);

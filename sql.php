@@ -83,7 +83,6 @@ if ($conn->connect_error) {
     add_user.addEventListener("click", function() {
       add_user_formContainer.style.display = "block";
     });
-    监听表单提交事件
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
       event.preventDefault(); // 阻止表单默认提交事件
@@ -163,7 +162,6 @@ if ($conn->connect_error) {
     add_video.addEventListener("click", function() {
       add_video_formContainer.style.display = "block";
     });
-    监听表单提交事件
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
       event.preventDefault(); // 阻止表单默认提交事件
@@ -237,7 +235,6 @@ if ($conn->connect_error) {
     add_staff.addEventListener("click", function() {
       add_staff_formContainer.style.display = "block";
     });
-    监听表单提交事件
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
       event.preventDefault(); // 阻止表单默认提交事件
@@ -315,7 +312,6 @@ if ($conn->connect_error) {
     add_comment.addEventListener("click", function() {
       add_comment_formContainer.style.display = "block";
     });
-    监听表单提交事件
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
       event.preventDefault(); // 阻止表单默认提交事件
