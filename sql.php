@@ -52,8 +52,8 @@ if ($conn->connect_error) {
         <col width="50">
       </colgroup>
     </table>
-    <button id="showFormButton">添加</button>
-    <div id="formContainer" style="display:none;">
+    <button id="add_user">添加</button>
+    <div id="add_user_formContainer" style="display:none;">
       <form method="post" action="insert.php">
         <input type="hidden" name="insert_user" value=1>
         <input type="hidden" name="username" value=<?php echo $username;?>>
@@ -75,12 +75,10 @@ if ($conn->connect_error) {
     ?>
     </p>
     <script>
-    var showFormButton = document.getElementById("showFormButton");
-    var formContainer = document.getElementById("formContainer");
-    var form = document.getElementById("myForm");
-    var resultDiv = document.getElementById("result");
-    showFormButton.addEventListener("click", function() {
-      formContainer.style.display = "block";
+    var add_user = document.getElementById("add_user");
+    var add_user_formContainer = document.getElementById("add_user_formContainer");
+    add_user.addEventListener("click", function() {
+      add_user_formContainer.style.display = "block";
     });
     监听表单提交事件
     var form = document.querySelector('form');
@@ -100,7 +98,7 @@ if ($conn->connect_error) {
 
   <td id="Table:video" style="width:1100px;vertical-align:top;">
     <?php
-    $sql = "select * from video limit 10";
+    $sql = "select * from video limit 20";
     $result = $conn->query($sql);
     ?>
     <table border="1" style="background-color:#EEEEEE;float:left;">
@@ -132,10 +130,51 @@ if ($conn->connect_error) {
         <col width="100">
       </colgroup>
     </table>
+    <button id="add_video">添加</button>
+    <div id="add_video_formContainer" style="display:none;">
+      <form method="post" action="insert.php">
+        <input type="hidden" name="insert_video" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        <input type="text" name="titleAdd" placeholder="title" style="width=300;"><br>
+        <input type="text" name="authorAdd" placeholder="author" style="width=300;"><br>
+        <input type="text" name="channelAdd" placeholder="channel" style="width=300;"><br>
+        <input type="text" name="urlAdd" placeholder="url" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <p style="color: red;">
+    <?php
+      if (isset($_POST['video_insert_error_message'])&&$_POST['video_insert_error_message']!='ok') {
+        $video_insert_error_message = $_POST['video_insert_error_message'];
+        printf("%s",$video_insert_error_message);
+      }
+    ?>
+    </p>
+    <script>
+    var add_video = document.getElementById("add_video");
+    var add_video_formContainer = document.getElementById("add_video_formContainer");
+    add_video.addEventListener("click", function() {
+      add_video_formContainer.style.display = "block";
+    });
+    监听表单提交事件
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // 阻止表单默认提交事件
+      // 获取表单数据
+      var formData = new FormData(form);
+      // 发送 AJAX 请求将表单数据提交到服务器端
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'insert.php');
+      xhr.send(formData);
+      // 刷新页面
+      location.reload();
+    });
+    </script>
   </td>
   </tr>
   <tr>
-  <td id="Table:staff" style="width:300px;vertical-align:top;">
+  <td id="Table:staff" style="width:500px;vertical-align:top;">
     <?php
     $sql = "select * from staff limit 20";
     $result = $conn->query($sql);
@@ -156,13 +195,55 @@ if ($conn->connect_error) {
         ?>
       </tbody>
       <colgroup>
+        <col width="300">
         <col width="100">
-        <col width="50">
-        <col width="50">
+        <col width="100">
       </colgroup>
     </table>
+    <button id="add_staff">添加</button>
+    <div id="add_staff_formContainer" style="display:none;">
+      <form method="post" action="insert.php">
+        <input type="hidden" name="insert_staff" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        <input type="text" name="passwdAdd" placeholder="passwd" style="width=300;"><br>
+        <input type="radio" name="isDeveloperAdd" value=1>开发者
+        <input type="radio" name="isDeveloperAdd" value=0>非开发者<br>
+        <input type="radio" name="isRunnerAdd" value=1>运营者
+        <input type="radio" name="isRunnerAdd" value=0>非运营者<br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <p style="color: red;">
+    <?php
+      if (isset($_POST['staff_insert_error_message'])&&$_POST['staff_insert_error_message']!='ok') {
+        $staff_insert_error_message = $_POST['staff_insert_error_message'];
+        printf("%s",$staff_insert_error_message);
+      }
+    ?>
+    </p>
+    <script>
+    var add_staff = document.getElementById("add_staff");
+    var add_staff_formContainer = document.getElementById("add_staff_formContainer");
+    add_staff.addEventListener("click", function() {
+      add_staff_formContainer.style.display = "block";
+    });
+    监听表单提交事件
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // 阻止表单默认提交事件
+      // 获取表单数据
+      var formData = new FormData(form);
+      // 发送 AJAX 请求将表单数据提交到服务器端
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'insert.php');
+      xhr.send(formData);
+      // 刷新页面
+      location.reload();
+    });
+    </script>
   </td>
-  <td id="Table:comment" style="width:1000px;vertical-align:top;">
+  <td id="Table:comment" style="width:1100px;vertical-align:top;">
     <?php
     $sql = "select * from comment limit 20";
     $result = $conn->query($sql);
@@ -191,15 +272,55 @@ if ($conn->connect_error) {
         <col width="200">
         <col width="100">
         <col width="200">
-        <col width="350">
+        <col width="450">
       </colgroup>
     </table>
+    <button id="add_comment">添加</button>
+    <div id="add_comment_formContainer" style="display:none;">
+      <form method="post" action="insert.php">
+        <input type="hidden" name="insert_comment" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        <input type="text" name="videoIDAdd" placeholder="videoID" style="width=300;"><br>
+        <input type="text" name="authorAdd" placeholder="author" style="width=300;"><br>
+        <input type="text" name="repidAdd" placeholder="repid" style="width=300;"><br>
+        <input type="text" name="repAdd" placeholder="rep" style="width=300;"><br>
+        <input type="text" name="commentTextAdd" placeholder="commentText" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <p style="color: red;">
+    <?php
+      if (isset($_POST['comment_insert_error_message'])&&$_POST['comment_insert_error_message']!='ok') {
+        $comment_insert_error_message = $_POST['comment_insert_error_message'];
+        printf("%s",$comment_insert_error_message);
+      }
+    ?>
+    </p>
+    <script>
+    var add_comment = document.getElementById("add_comment");
+    var add_comment_formContainer = document.getElementById("add_comment_formContainer");
+    add_comment.addEventListener("click", function() {
+      add_comment_formContainer.style.display = "block";
+    });
+    监听表单提交事件
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // 阻止表单默认提交事件
+      // 获取表单数据
+      var formData = new FormData(form);
+      // 发送 AJAX 请求将表单数据提交到服务器端
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'insert.php');
+      xhr.send(formData);
+      // 刷新页面
+      location.reload();
+    });
+    </script>
   </td>
   </tr>
 </table>
 <?php
 $conn->close();
-// 清除Session数据
-//unset($_SESSION['form_data']);
 ?>
 </html>
