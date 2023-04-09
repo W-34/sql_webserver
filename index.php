@@ -15,7 +15,7 @@ password: <input type="password" name="password"><br>
 	// 检查是否有错误消息传递
 	if (isset($_GET['error_message'])) {
 		$error_message = $_GET['error_message'];
-		echo '<p style="color: red;">' . $error_message . '</p>';
+		echo '<p style="color: red;text-align:center;">' . $error_message . '</p>';
 	}
 	?>
 <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">

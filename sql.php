@@ -6,11 +6,8 @@
 <div id="header" style="background-color:#FFA500;">
 <h1 style="margin-bottom:0;">以<?php echo $_POST["username"]; ?>登录到mysql</h1></div>
 <hr>
-<?php
-session_start();
-//储存和加载表单
-//...
 
+<?php
 //header("content-type:text/html;charset=utf-8");
 $servername = "8.130.102.240";
 $username = $_POST["username"];
@@ -58,6 +55,7 @@ if ($conn->connect_error) {
     <button id="showFormButton">添加</button>
     <div id="formContainer" style="display:none;">
       <form method="post" action="insert.php">
+        <input type="hidden" name="insert_user" value=1>
         <input type="hidden" name="username" value=<?php echo $username;?>>
         <input type="hidden" name="password" value=<?php echo $password;?>>
         <input type="text" name="usernameAdd" placeholder="username" style="width=250;"><br>
@@ -68,6 +66,14 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
+    <p style="color: red;">
+    <?php
+      if (isset($_POST['user_insert_error_message'])&&$_POST['user_insert_error_message']!='ok') {
+        $user_insert_error_message = $_POST['user_insert_error_message'];
+        printf("%s",$user_insert_error_message);
+      }
+    ?>
+    </p>
     <script>
     var showFormButton = document.getElementById("showFormButton");
     var formContainer = document.getElementById("formContainer");
@@ -84,17 +90,10 @@ if ($conn->connect_error) {
       var formData = new FormData(form);
       // 发送 AJAX 请求将表单数据提交到服务器端
       var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          // 更新页面内容
-          //location.reload();//不保留POST
-          window.location.href = window.location.href;
-        }
-      }
       xhr.open('POST', 'insert.php');
       xhr.send(formData);
       // 刷新页面
-      //location.reload();
+      location.reload();
     });
     </script>
   </td>
@@ -200,5 +199,7 @@ if ($conn->connect_error) {
 </table>
 <?php
 $conn->close();
+// 清除Session数据
+//unset($_SESSION['form_data']);
 ?>
 </html>
