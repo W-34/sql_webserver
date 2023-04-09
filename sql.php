@@ -7,6 +7,10 @@
 <h1 style="margin-bottom:0;">以<?php echo $_POST["username"]; ?>登录到mysql</h1></div>
 <hr>
 <?php
+session_start();
+//储存和加载表单
+//...
+
 //header("content-type:text/html;charset=utf-8");
 $servername = "8.130.102.240";
 $username = $_POST["username"];
@@ -51,6 +55,48 @@ if ($conn->connect_error) {
         <col width="50">
       </colgroup>
     </table>
+    <button id="showFormButton">添加</button>
+    <div id="formContainer" style="display:none;">
+      <form method="post" action="insert.php">
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        <input type="text" name="usernameAdd" placeholder="username" style="width=250;"><br>
+        <input type="text" name="passwordAdd" placeholder="password" style="width=250;"><br>
+        <input type="text" name="nameAdd" placeholder="name" style="width=200;"><br>
+        <input type="radio" name="isAuthorAdd" value=1>视频作者
+        <input type="radio" name="isAuthorAdd" value=0>普通用户<br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var showFormButton = document.getElementById("showFormButton");
+    var formContainer = document.getElementById("formContainer");
+    var form = document.getElementById("myForm");
+    var resultDiv = document.getElementById("result");
+    showFormButton.addEventListener("click", function() {
+      formContainer.style.display = "block";
+    });
+    监听表单提交事件
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // 阻止表单默认提交事件
+      // 获取表单数据
+      var formData = new FormData(form);
+      // 发送 AJAX 请求将表单数据提交到服务器端
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          // 更新页面内容
+          //location.reload();//不保留POST
+          window.location.href = window.location.href;
+        }
+      }
+      xhr.open('POST', 'insert.php');
+      xhr.send(formData);
+      // 刷新页面
+      //location.reload();
+    });
+    </script>
   </td>
 
   <td id="Table:video" style="width:1100px;vertical-align:top;">
