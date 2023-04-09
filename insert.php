@@ -23,7 +23,7 @@ if (isset($_POST['insert_user'])) {
     $user_insert_error_message='ok';
     if($result==false){
     //echo '<p>$mysqli->error</p>';
-    $user_insert_error_message=$mysqli->error;
+    $user_insert_error_message=urlencode($mysqli->error);
     }
     else{
     //echo "success";
@@ -41,7 +41,7 @@ if (isset($_POST['insert_user'])) {
     $video_insert_error_message='ok';
     if($result==false){
     //echo '<p>$mysqli->error</p>';
-    $video_insert_error_message=$mysqli->error;
+    $video_insert_error_message=urlencode($mysqli->error);
     }
     else{
     //echo "success";
@@ -60,7 +60,7 @@ if (isset($_POST['insert_user'])) {
     $comment_insert_error_message='ok';
     if($result==false){
     //echo '<p>$mysqli->error</p>';
-    $comment_insert_error_message=$mysqli->error;
+    $comment_insert_error_message=urlencode($mysqli->error);
     }
     else{
     //echo "success";
@@ -77,7 +77,7 @@ if (isset($_POST['insert_user'])) {
     $staff_insert_error_message='ok';
     if($result==false){
     //echo '<p>$mysqli->error</p>';
-    $staff_insert_error_message=$mysqli->error;
+    $staff_insert_error_message=urlencode($mysqli->error);
     }
     else{
     //echo "success";

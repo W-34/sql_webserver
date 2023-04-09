@@ -66,11 +66,14 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
-    <p style="color: red;">
+    <p style="color: red;width=500;">
     <?php
       if (isset($_POST['user_insert_error_message'])&&$_POST['user_insert_error_message']!='ok') {
         $user_insert_error_message = $_POST['user_insert_error_message'];
-        printf("%s",$user_insert_error_message);
+        printf("%s<br>",urldecode($user_insert_error_message));
+        if(substr(urldecode($user_insert_error_message),0,21)=='INSERT command denied'){
+          printf("账号%s不具有该表的插入权限",$username);
+        }
       }
     ?>
     </p>
@@ -143,11 +146,14 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
-    <p style="color: red;">
+    <p style="color: red;width=500;">
     <?php
       if (isset($_POST['video_insert_error_message'])&&$_POST['video_insert_error_message']!='ok') {
         $video_insert_error_message = $_POST['video_insert_error_message'];
-        printf("%s",$video_insert_error_message);
+        printf("%s<br>",urldecode($video_insert_error_message));
+        if(substr(urldecode($video_insert_error_message),0,21)=='INSERT command denied'){
+          printf("账号%s不具有该表的插入权限",$username);
+        }
       }
     ?>
     </p>
@@ -214,11 +220,14 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
-    <p style="color: red;">
+    <p style="color: red;width=500;">
     <?php
       if (isset($_POST['staff_insert_error_message'])&&$_POST['staff_insert_error_message']!='ok') {
         $staff_insert_error_message = $_POST['staff_insert_error_message'];
-        printf("%s",$staff_insert_error_message);
+        printf("%s<br>",urldecode($staff_insert_error_message));
+        if(substr(urldecode($staff_insert_error_message),0,21)=='INSERT command denied'){
+          printf("账号%s不具有该表的插入权限",$username);
+        }
       }
     ?>
     </p>
@@ -289,11 +298,14 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
-    <p style="color: red;">
+    <p style="color: red;width=500;">
     <?php
       if (isset($_POST['comment_insert_error_message'])&&$_POST['comment_insert_error_message']!='ok') {
         $comment_insert_error_message = $_POST['comment_insert_error_message'];
-        printf("%s",$comment_insert_error_message);
+        printf("%s<br>",urldecode($comment_insert_error_message));
+        if(substr(urldecode($comment_insert_error_message),0,21)=='INSERT command denied'){
+          printf("账号%s不具有该表的插入权限",$username);
+        }
       }
     ?>
     </p>
