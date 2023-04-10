@@ -66,6 +66,32 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
+    <button id="delete_user">删除</button>
+    <div id="delete_user_formContainer" style="display:none;">
+      <form method="post" action="delete.php">
+        <input type="hidden" name="delete_user" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        delete from user where <input type="text" name="userToDel" placeholder="删除条件" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var delete_user = document.getElementById("delete_user");
+    var delete_user_formContainer = document.getElementById("delete_user_formContainer");
+    var delete_user_show=0;
+    delete_user.addEventListener("click", function() {
+      if(delete_user_show%2==0){
+        delete_user_formContainer.style.display = "block";
+        delete_user.innerHTML='隐藏';
+      }
+      else{
+        delete_user_formContainer.style.display='none';
+        delete_user.innerHTML='删除';
+      }
+      delete_user_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['user_insert_error_message'])&&$_POST['user_insert_error_message']!='ok') {
@@ -74,6 +100,25 @@ if ($conn->connect_error) {
         if(substr(urldecode($user_insert_error_message),0,21)=='INSERT command denied'){
           printf("账号%s不具有该表的插入权限",$username);
         }
+      }
+    ?>
+    </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['user_delete_error_message'])&&$_POST['user_delete_error_message']!='ok') {
+        $user_delete_error_message = $_POST['user_delete_error_message'];
+        printf("%s<br>",urldecode($user_delete_error_message));
+        if(substr(urldecode($user_delete_error_message),0,21)=='DELETE command denied'){
+          printf("账号%s不具有该表的删除权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['user_delete_info_message'])&&$_POST['user_delete_info_message']!='') {
+        $user_delete_info_message = $_POST['user_delete_info_message'];
+        printf("%s条数据被删除<br>",urldecode($user_delete_info_message));
       }
     ?>
     </p>
@@ -154,6 +199,32 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
+    <button id="delete_video">删除</button>
+    <div id="delete_video_formContainer" style="display:none;">
+      <form method="post" action="delete.php">
+        <input type="hidden" name="delete_video" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        delete from video where <input type="text" name="videoToDel" placeholder="删除条件" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var delete_video = document.getElementById("delete_video");
+    var delete_video_formContainer = document.getElementById("delete_video_formContainer");
+    var delete_video_show=0;
+    delete_video.addEventListener("click", function() {
+      if(delete_video_show%2==0){
+        delete_video_formContainer.style.display = "block";
+        delete_video.innerHTML='隐藏';
+      }
+      else{
+        delete_video_formContainer.style.display='none';
+        delete_video.innerHTML='删除';
+      }
+      delete_video_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['video_insert_error_message'])&&$_POST['video_insert_error_message']!='ok') {
@@ -162,6 +233,25 @@ if ($conn->connect_error) {
         if(substr(urldecode($video_insert_error_message),0,21)=='INSERT command denied'){
           printf("账号%s不具有该表的插入权限",$username);
         }
+      }
+    ?>
+    </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['video_delete_error_message'])&&$_POST['video_delete_error_message']!='ok') {
+        $video_delete_error_message = $_POST['video_delete_error_message'];
+        printf("%s<br>",urldecode($video_delete_error_message));
+        if(substr(urldecode($video_delete_error_message),0,21)=='DELETE command denied'){
+          printf("账号%s不具有该表的删除权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['video_delete_info_message'])&&$_POST['video_delete_info_message']!='') {
+        $video_delete_info_message = $_POST['video_delete_info_message'];
+        printf("%s条数据被删除<br>",urldecode($video_delete_info_message));
       }
     ?>
     </p>
@@ -236,6 +326,32 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
+    <button id="delete_staff">删除</button>
+    <div id="delete_staff_formContainer" style="display:none;">
+      <form method="post" action="delete.php">
+        <input type="hidden" name="delete_staff" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        delete from staff where <input type="text" name="staffToDel" placeholder="删除条件" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var delete_staff = document.getElementById("delete_staff");
+    var delete_staff_formContainer = document.getElementById("delete_staff_formContainer");
+    var delete_staff_show=0;
+    delete_staff.addEventListener("click", function() {
+      if(delete_staff_show%2==0){
+        delete_staff_formContainer.style.display = "block";
+        delete_staff.innerHTML='隐藏';
+      }
+      else{
+        delete_staff_formContainer.style.display='none';
+        delete_staff.innerHTML='删除';
+      }
+      delete_staff_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['staff_insert_error_message'])&&$_POST['staff_insert_error_message']!='ok') {
@@ -244,6 +360,25 @@ if ($conn->connect_error) {
         if(substr(urldecode($staff_insert_error_message),0,21)=='INSERT command denied'){
           printf("账号%s不具有该表的插入权限",$username);
         }
+      }
+    ?>
+    </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['staff_delete_error_message'])&&$_POST['staff_delete_error_message']!='ok') {
+        $staff_delete_error_message = $_POST['staff_delete_error_message'];
+        printf("%s<br>",urldecode($staff_delete_error_message));
+        if(substr(urldecode($staff_delete_error_message),0,21)=='DELETE command denied'){
+          printf("账号%s不具有该表的删除权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['staff_delete_info_message'])&&$_POST['staff_delete_info_message']!='') {
+        $staff_delete_info_message = $_POST['staff_delete_info_message'];
+        printf("%s条数据被删除<br>",urldecode($staff_delete_info_message));
       }
     ?>
     </p>
@@ -322,6 +457,32 @@ if ($conn->connect_error) {
         <input type="submit" name="submit" value="提交">
       </form>
     </div>
+    <button id="delete_comment">删除</button>
+    <div id="delete_comment_formContainer" style="display:none;">
+      <form method="post" action="delete.php">
+        <input type="hidden" name="delete_comment" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        delete from comment where <input type="text" name="commentToDel" placeholder="删除条件" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var delete_comment = document.getElementById("delete_comment");
+    var delete_comment_formContainer = document.getElementById("delete_comment_formContainer");
+    var delete_comment_show=0;
+    delete_comment.addEventListener("click", function() {
+      if(delete_comment_show%2==0){
+        delete_comment_formContainer.style.display = "block";
+        delete_comment.innerHTML='隐藏';
+      }
+      else{
+        delete_comment_formContainer.style.display='none';
+        delete_comment.innerHTML='删除';
+      }
+      delete_comment_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['comment_insert_error_message'])&&$_POST['comment_insert_error_message']!='ok') {
@@ -330,6 +491,25 @@ if ($conn->connect_error) {
         if(substr(urldecode($comment_insert_error_message),0,21)=='INSERT command denied'){
           printf("账号%s不具有该表的插入权限",$username);
         }
+      }
+    ?>
+    </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['comment_delete_error_message'])&&$_POST['comment_delete_error_message']!='ok') {
+        $comment_delete_error_message = $_POST['comment_delete_error_message'];
+        printf("%s<br>",urldecode($comment_delete_error_message));
+        if(substr(urldecode($comment_delete_error_message),0,21)=='DELETE command denied'){
+          printf("账号%s不具有该表的删除权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['comment_delete_info_message'])&&$_POST['comment_delete_info_message']!='') {
+        $comment_delete_info_message = $_POST['comment_delete_info_message'];
+        printf("%s条数据被删除<br>",urldecode($comment_delete_info_message));
       }
     ?>
     </p>
