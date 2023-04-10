@@ -80,8 +80,17 @@ if ($conn->connect_error) {
     <script>
     var add_user = document.getElementById("add_user");
     var add_user_formContainer = document.getElementById("add_user_formContainer");
+    var add_user_show=0;
     add_user.addEventListener("click", function() {
-      add_user_formContainer.style.display = "block";
+      if(add_user_show%2==0){
+        add_user_formContainer.style.display = "block";
+        add_user.innerHTML='隐藏';
+      }
+      else{
+        add_user_formContainer.style.display='none';
+        add_user.innerHTML='添加';
+      }
+      add_user_show++;
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
@@ -159,8 +168,17 @@ if ($conn->connect_error) {
     <script>
     var add_video = document.getElementById("add_video");
     var add_video_formContainer = document.getElementById("add_video_formContainer");
+    var add_video_show=0;
     add_video.addEventListener("click", function() {
-      add_video_formContainer.style.display = "block";
+      if(add_video_show%2==0){
+        add_video_formContainer.style.display = "block";
+        add_video.innerHTML='隐藏';
+      }
+      else{
+        add_video_formContainer.style.display='none';
+        add_video.innerHTML='添加';
+      }
+      add_video_show++;
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
@@ -232,8 +250,17 @@ if ($conn->connect_error) {
     <script>
     var add_staff = document.getElementById("add_staff");
     var add_staff_formContainer = document.getElementById("add_staff_formContainer");
+    var add_staff_show=0;
     add_staff.addEventListener("click", function() {
-      add_staff_formContainer.style.display = "block";
+      if(add_staff_show%2==0){
+        add_staff_formContainer.style.display = "block";
+        add_staff.innerHTML='隐藏';
+      }
+      else{
+        add_staff_formContainer.style.display='none';
+        add_staff.innerHTML='添加';
+      }
+      add_staff_show++;
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
@@ -309,8 +336,17 @@ if ($conn->connect_error) {
     <script>
     var add_comment = document.getElementById("add_comment");
     var add_comment_formContainer = document.getElementById("add_comment_formContainer");
+    var add_comment_show=0;
     add_comment.addEventListener("click", function() {
-      add_comment_formContainer.style.display = "block";
+      if(add_comment_show%2==0){
+        add_comment_formContainer.style.display = "block";
+        add_comment.innerHTML='隐藏';
+      }
+      else{
+        add_comment_formContainer.style.display='none';
+        add_comment.innerHTML='添加';
+      }
+      add_comment_show++;
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
