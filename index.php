@@ -9,9 +9,9 @@
 	</div>
 	<div id='login' style="width=400;height=100px;float:left;">
 		<form action="sql.php" method="post" style="text-align:start;" width="300" height="200">
-		username: <input type="text" name="username" style="align:center"><a href="8.130.102.240/signup.html" style="color:blue;">注册</a><br>
+		username: <input type="text" name="username" style="align:center"><a href="signup.html" style="color:blue;">注册</a><br>
 		<div style="height:30px;width:3px;float:left;"></div>
-		password: <input type="password" name="password"><a href="8.130.102.240/resetpasswd.html" style="color:blue;">忘记密码？</a><br>
+		password: <input type="password" name="password"><a href="resetpasswd.html" style="color:blue;">忘记密码？</a><br>
 
 		<div style="height:30px;width:130px;float:left;"></div>
 		<input type="submit" value="登录" style="align:center">
