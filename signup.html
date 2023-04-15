@@ -4,19 +4,19 @@
         <h2 style="text-align:center">欢迎新用户！</h1>
     </head>
     <body style="background-color:#FFD700;">
-        <div id="none" style="background-color:#FFD700;height:550px;width:600px;float:left;"></div>
+        <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div>
         <div id='signup' style="width:400;height:100px;float:left;">
             <form action="addUser.php" method="post" style="text-align:end;" width="300" height="200">
             注册邮箱: <input id="username" type="text" name="username">
             <p id="usernameFormatError" style="display:none;color:red">请输入正确的邮箱</p><br>
             <!-- <div style="height:30px;width:3px;float:left;"></div> -->
-            密码: <input id="password" type="password">
+            密码: <input id="password" type="password" name="password">
             <p id="passwordFormatError" style="display:none;color:red">密码格式错误，只能包含大小写字母、数字和这些特殊字符：!@#$%^&*</p>
             <p id="passwordLengthError" style="display:none;color:red">密码长度为6到20个字符</p>
             <br>
-            确认密码: <input id="passwordDup" type="password">
+            确认密码: <input id="passwordDup" type="password" name="passwordDup">
             <p id="passwordDupError" style="display:none;color:red">密码不一致</p><br>
-            申请成为视频创作者：<input type="checkbox" name="becomeAuthor" value=1><br>
+            申请成为视频创作者：<input type="checkbox" id="becomeAuthor" name="becomeAuthor" value=1><br>
             <div style="height:30px;width:100px;float:left;"></div>
             </form>
             <div id="none" style="background-color:#FFD700;height:30px;width:180px;float:left;"></div>
@@ -48,12 +48,12 @@
                     password.value="";
                     passwordDup.value="";
                 }
-                else if (passwordRegex.test(password.value)) {
-                    passwordOK=true;
-                } else {
+                else if (!passwordRegex.test(password.value)) {
                     passwordErrorMessage.style.display='block';
                     password.value="";
                     passwordDup.value="";
+                } else {
+                    passwordOK=true;
                 }
                 if (password.value==passwordDup.value) {
                     passwordDupOK=true;

@@ -17,7 +17,7 @@
 		<input type="submit" value="登录" style="align:center">
 		</form>
 	</div>
-	<div id="none" style="background-color:#FFD700;height:100px;width:600px;float:left;"></div>
+	<div id="none" style="background-color:#FFD700;height:100px;width:670px;float:left;"></div>
 	<div style="">
 		<?php
 			// 检查是否有错误消息传递
