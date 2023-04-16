@@ -24,8 +24,8 @@ $isAuthor =$_POST['becomeAuthor'];
 $token=generateRandomString();
 $to = $username;
 $subject = "请验证您的邮箱";
-$verification_link = "https://8.130.102.240/verify-email?token=$token";
-$message = "请点击以下链接验证您的邮箱： $verification_link";
+$verification_link = "http://8.130.102.240/verify-email?token=$token";
+$message = "请点击以下链接验证您的邮箱： <a href='$verification_link'>确认注册</a>";
 $headers = "From: testMail@w34.com" . "\r\n" .
            "Reply-To: $to" . "\r\n" .
            "X-Mailer: PHP/" . phpversion();
@@ -40,7 +40,7 @@ try {
     $mail->Password   = getenv('SMTP_PASSWORD');
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
-
+    $mail->CharSet = 'UTF-8';
     // 设置收件人、主题和内容
     $mail->setFrom('1405663018@qq.com', 'W-34');
     $mail->addAddress($to, 'Recipient Name');
