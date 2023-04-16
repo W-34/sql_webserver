@@ -1,4 +1,8 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 if(!isset($_POST['username'])||!isset($_POST['password'])){
     header('Location:signup.html');
 }
@@ -20,16 +24,34 @@ $isAuthor =$_POST['becomeAuthor'];
 $token=generateRandomString();
 $to = $username;
 $subject = "请验证您的邮箱";
-$verification_link = "https://8.130.102.240/verify-email?token=<User$token>";
+$verification_link = "https://8.130.102.240/verify-email?token=$token";
 $message = "请点击以下链接验证您的邮箱： $verification_link";
 $headers = "From: testMail@w34.com" . "\r\n" .
            "Reply-To: $to" . "\r\n" .
            "X-Mailer: PHP/" . phpversion();
 
-if (mail($to, $subject, $message, $headers)) {
-    echo "邮件已经成功发送到SMTP服务器！";
-} else {
-    echo "邮件发送失败：" . print_r(error_get_last(), true);
+$mail=new PHPMailer(true);
+try {
+    // 配置SMTP服务器地址和端口号
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.qq.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = getenv('SMTP_USERNAME');
+    $mail->Password   = getenv('SMTP_PASSWORD');
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
+
+    // 设置收件人、主题和内容
+    $mail->setFrom('1405663018@qq.com', 'W-34');
+    $mail->addAddress($to, 'Recipient Name');
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $message;
+
+    // 发送邮件
+    $mail->send();
+    echo '邮件发送成功！';
+} catch (Exception $e) {
+    echo '邮件发送失败：', $mail->ErrorInfo;
 }
-        
 ?>
