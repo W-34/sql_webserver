@@ -58,8 +58,8 @@ else{
                     }
                     else{
                         echo '<p>注册成功</p>';
-                        echo '<p>10秒后返回登录页面</p>';
-                        header('refresh:10;url=http://8.130.102.240/index.php');
+                        echo '<p>5秒后返回登录页面</p>';
+                        header('refresh:5;url=http://8.130.102.240/index.php');
                     }
                 }
             }
