@@ -54,7 +54,7 @@ else{
                     $conn1->query($addUser);
                     if($conn1->error){
                         echo '<p style=\'color:red;\'>创建用户失败：</p>';
-                        echo '<p style=\'color:red;\'>'.$conn->error.'</p>';
+                        echo '<p style=\'color:red;\'>'.$conn1->error.'</p>';
                     }
                     else{
                         echo '<p>注册成功</p>';
