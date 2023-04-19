@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>注册到w34's mysql</title>
+        <h2 style="text-align:center">重置密码</h1>
+    </head>
+    <body style="background-color:#FFD700;">
+        <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div>
+        <div id='signup' style="width:400;height:100px;float:left;">
+            <form action="resetpasswd.php" method="post" style="text-align:end;" width="300" height="200">
+            注册邮箱: <input id="username" type="text" name="username">
+            <p id="usernameFormatError" style="display:none;color:red">请输入正确的邮箱</p><br>
+            <!-- <div style="height:30px;width:3px;float:left;"></div> -->
+            <div style="height:30px;width:100px;float:left;"></div>
+            </form>
+            <div id="none" style="background-color:#FFD700;height:30px;width:180px;float:left;"></div>
+            <button id="submitForm">重置密码</button>
+        </div>
+        <div id="none" style="background-color:#FFD700;height:150px;width:600px;float:left;"></div>
+        <script>
+            var form = document.querySelector('form');
+            var username = document.getElementById('username');
+            var usernameRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]+$/;
+            var usernameErrorMessage=document.getElementById('usernameFormatError');
+            var password=document.getElementById('password');
+            var passwordRegex = /^[a-zA-Z0-9!@#$%^&*]{6,}$/;
+            var passwordErrorMessage=document.getElementById('passwordFormatError');
+            var passwordLengthErrorMessage=document.getElementById('passwordLengthError');
+            var passwordDup=document.getElementById('passwordDup');
+            var passwordDupErrorMessage=document.getElementById('passwordDupError');
+            var usernameOK=false,passwordOK=false,passwordDupOK=false;
+            var buttonSubmit=document.getElementById("submitForm");
+            buttonSubmit.addEventListener("click",function(event){
+                if (usernameRegex.test(username.value)) {
+                    usernameOK=true;
+                } else {
+                    usernameErrorMessage.style.display='block';
+                    username.value="";
+                }
+                if(password.value.length<6||password.value.length>20){
+                    passwordLengthErrorMessage.style.display='block';
+                    password.value="";
+                    passwordDup.value="";
+                }
+                else if (!passwordRegex.test(password.value)) {
+                    passwordErrorMessage.style.display='block';
+                    password.value="";
+                    passwordDup.value="";
+                } else {
+                    passwordOK=true;
+                }
+                if (password.value==passwordDup.value) {
+                    passwordDupOK=true;
+                } else {
+                    passwordDupErrorMessage.style.display='block';
+                    //password.value="";
+                    passwordDup.value="";
+                }
+                if(usernameOK&&passwordOK&&passwordDupOK){
+                    form.submit();
+                }
+            });
+        </script>
+        <p></p>
+        <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+            版权所有 © w34</div>
+    </body>
+</html>
