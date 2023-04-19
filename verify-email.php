@@ -50,7 +50,7 @@ else{
                     echo '<p style=\'color:red;\'>网络错误，请与管理员联系</p>';
                 }
                 else{
-                    $addUser='insert into user(username,passwdEncrypted,name)values(\''.$row['username'].'\',SHA2(\''.$row['password'].'\',256),\''.'USER'.generateRandomString(16).'\')';
+                    $addUser='insert into user(username,passwdEncrypted,name)values(\''.$row['username'].'\',SHA2(\''.$row['password'].'\',256),\''.'USER_'.generateRandomString(12).'\')';
                     $conn1->query($addUser);
                     if($conn1->error){
                         echo '<p style=\'color:red;\'>创建用户失败：</p>';
