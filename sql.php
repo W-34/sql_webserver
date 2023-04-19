@@ -27,7 +27,7 @@ if ($conn->connect_error) {
   <tr>
   <td id="Table:user" style="width:500px;vertical-align:top;">
     <?php
-    $sql = "select * from user limit 20";
+    $sql = "select * from user_fromweb limit 20";
     $result = $conn->query($sql);
     ?>
     <table border="1" style="background-color:#EEEEEE;float:left;">
@@ -37,11 +37,10 @@ if ($conn->connect_error) {
           <th>id</th>
           <th>username</th>
           <th>name</th>
-          <th>isAuthor</th>
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%8s   </td> <td>%20s   </td> <td>%s   </td> <td>%b   </td> </tr>", $row["id"],$row["username"], $row["name"], $row["isAuthor"]);
+                printf("<tr> <td>%s   </td> <td>%s   </td> <td>%s   </td> </tr>", $row["id"],$row["username"], $row["name"]);
             }
         ?>
       </tbody>
@@ -49,7 +48,6 @@ if ($conn->connect_error) {
         <col width="50">
         <col width="200">
         <col width="200">
-        <col width="50">
       </colgroup>
     </table>
     <button id="add_user">添加</button>
@@ -154,7 +152,7 @@ if ($conn->connect_error) {
 
   <td id="Table:video" style="width:1100px;vertical-align:top;">
     <?php
-    $sql = "select * from video limit 20";
+    $sql = "select * from video_fromweb limit 20";
     $result = $conn->query($sql);
     ?>
     <table border="1" style="background-color:#EEEEEE;float:left;">
@@ -166,13 +164,12 @@ if ($conn->connect_error) {
           <th>author</th>
           <th>date</th>
           <th>channel</th>
-          <th>url</th>
           <th>likes</th>
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%d</td></tr>",
-                $row["id"],$row["title"], $row["author"], $row["date"],$row["channel"],$row["url"],$row['likes']);
+                printf("<tr> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%d</td></tr>",
+                $row["id"],$row["title"], $row["author"], $row["date"],$row["channel"],$row['likes']);
             }
         ?>
       </tbody>
@@ -181,8 +178,7 @@ if ($conn->connect_error) {
         <col width="200">
         <col width="200">
         <col width="200">
-        <col width="150">
-        <col width="200">
+        <col width="250">
         <col width="100">
       </colgroup>
     </table>
@@ -296,20 +292,20 @@ if ($conn->connect_error) {
       <tbody>
         <tr>
           <th>account</th>
-          <th>isDeveloper</th>
-          <th>isRunner</th>
+          <th>name</th>
+          <!-- <th>isRunner</th> -->
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%d</td> <td>%b</td> <td>%b</td> </tr>",
-                $row["account"],$row["isDeveloper"], $row["isRunner"]);
+                printf("<tr> <td>%d</td> <td>%s</td> </tr>",
+                $row["account"], $row["name"]);
             }
         ?>
       </tbody>
       <colgroup>
         <col width="300">
-        <col width="100">
-        <col width="100">
+        <col width="200">
+        <!-- <col width="100"> -->
       </colgroup>
     </table>
     <button id="add_staff">添加</button>
@@ -413,7 +409,7 @@ if ($conn->connect_error) {
   </td>
   <td id="Table:comment" style="width:1100px;vertical-align:top;">
     <?php
-    $sql = "select * from comment limit 20";
+    $sql = "select * from comment_fromweb limit 20";
     $result = $conn->query($sql);
     ?>
     <table border="1" style="background-color:#EEEEEE;float:left;">
@@ -423,14 +419,13 @@ if ($conn->connect_error) {
           <th>id</th>
           <th>videoID</th>
           <th>author</th>
-          <th>repid</th>
-          <th>rep</th>
+          <th>repTo</th>
           <th>commentText</th>
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%d</td> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> </tr>",
-                $row["id"],$row["videoID"], $row["author"], $row["repid"],$row["rep"],$row["commentText"]);
+                printf("<tr> <td>%d</td> <td>%d</td> <td>%s</td>  <td>%s</td> <td>%s</td> </tr>",
+                $row["id"],$row["videoID"], $row["author"],$row["repTo"],$row["commentText"]);
             }
         ?>
       </tbody>
@@ -439,8 +434,7 @@ if ($conn->connect_error) {
         <col width="100">
         <col width="200">
         <col width="100">
-        <col width="200">
-        <col width="450">
+        <col width="650">
       </colgroup>
     </table>
     <button id="add_comment">添加</button>
