@@ -54,10 +54,10 @@
         <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div>
         <div id='signup' style="width:400;height:100px;float:left;">
             <form action="updatepasswd.php" method="post" style="text-align:end;" width="300" height="200">
-            新密码: <input id="password" type="text" name="password">
+            新密码: <input id="password" type="password" name="password">
             <p id="passwordFormatError" style="display:none;color:red">密码格式错误，只能包含大小写字母、数字和这些特殊字符：!@#$%^&*</p>
             <p id="passwordLengthError" style="display:none;color:red">密码长度为6到20个字符</p><br>
-            确认密码: <input id="passwordDup" type="text" name="passwordDup">
+            确认密码: <input id="passwordDup" type="password" name="passwordDup">
             <p id="passwordDupError" style="display:none;color:red">密码不一致</p><br>
             <!-- <div style="height:30px;width:3px;float:left;"></div> -->
             <div style="height:30px;width:100px;float:left;"></div>
