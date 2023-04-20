@@ -54,6 +54,8 @@
         <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div>
         <div id='signup' style="width:400;height:100px;float:left;">
             <form action="updatepasswd.php" method="post" style="text-align:end;" width="300" height="200">
+            <input id="username" type="hidden" name="username" value="<?php echo $_GET['username'];?>">
+            <input id="token" type="hidden" name="token" value="<?php echo $_GET['token'];?>">
             新密码: <input id="password" type="password" name="password">
             <p id="passwordFormatError" style="display:none;color:red">密码格式错误，只能包含大小写字母、数字和这些特殊字符：!@#$%^&*</p>
             <p id="passwordLengthError" style="display:none;color:red">密码长度为6到20个字符</p><br>
