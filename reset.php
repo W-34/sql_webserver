@@ -29,14 +29,14 @@
         $servername = "8.130.102.240";
         $username = getenv('ADMIN_USERNAME');
         $password = getenv('ADMIN_PASSWORD');
-        $dbname='mysql';
+        $dbname='resetpassword';
         $conn = new mysqli($servername, $username, $password, $dbname);
         if ($conn->connect_error) {
             echo '<p style=\'color:red;\'>网络错误，请与管理员联系</p>';
             die();
         }
         else{
-            $query='select username,token from token where token=\''.str_check($_GET['token']).'\'';
+            $query='select username,token from tokens where token=\''.str_check($_GET['token']).'\' and username=\''.str_check($_GET['username']).'\'';
             $result=$conn->query($query);
             if($conn->error){
                 echo '<p>token错误，5秒后跳转到登录页面</p>';
