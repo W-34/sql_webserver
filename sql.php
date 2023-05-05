@@ -57,7 +57,7 @@ if ($conn->connect_error) {
         <input type="hidden" name="username" value=<?php echo $username;?>>
         <input type="hidden" name="password" value=<?php echo $password;?>>
         <input type="text" name="usernameAdd" placeholder="username" style="width=250;"><br>
-        <input type="text" name="passwordAdd" placeholder="password" style="width=250;"><br>
+        <input type="password" name="passwordAdd" placeholder="password" style="width=250;"><br>
         <input type="text" name="nameAdd" placeholder="name" style="width=200;"><br>
         <input type="radio" name="isAuthorAdd" value=1>视频作者
         <input type="radio" name="isAuthorAdd" value=0>普通用户<br>

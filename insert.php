@@ -29,16 +29,26 @@ if (isset($_POST['insert_user'])) {
     $nameAdd=str_check($_POST['nameAdd']);
     $isAuthorAdd=str_check($_POST['isAuthorAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
-    $sql = "INSERT INTO user (username,passwd,name,isAuthor) VALUES ('$usernameAdd','$passwordAdd','$nameAdd','$isAuthorAdd')";
+    // $sql = "INSERT INTO user (username,passwd,name,isAuthor) VALUES ('$usernameAdd','$passwordAdd','$nameAdd','$isAuthorAdd')";
+    $sql = "INSERT INTO user (username,passwdEncrypted,name) VALUES ('$usernameAdd',SHA2('$passwordAdd',256),'$nameAdd')";
+    
     $result=$mysqli->query($sql);
 
     $user_insert_error_message='ok';
     if($result==false){
-    //echo '<p>$mysqli->error</p>';
-    $user_insert_error_message=urlencode($mysqli->error);
+        $user_insert_error_message=urlencode($mysqli->error);
     }
     else{
-    //echo "success";
+        if($isAuthorAdd==1){
+            $sql2 ="INSERT INTO videoCreator (name) VALUES ('$nameAdd')";
+            $result=$mysqli->query($sql2);
+            if($result==false){
+                $user_insert_error_message=urlencode($mysqli->error);
+            }
+            else{
+            //echo "success";
+            }
+        }
     }
 }else if(isset($_POST['insert_video'])){
     // 在这里将表单数据插入数据库
@@ -52,8 +62,7 @@ if (isset($_POST['insert_user'])) {
 
     $video_insert_error_message='ok';
     if($result==false){
-    //echo '<p>$mysqli->error</p>';
-    $video_insert_error_message=urlencode($mysqli->error);
+        $video_insert_error_message=urlencode($mysqli->error);
     }
     else{
     //echo "success";
