@@ -2,6 +2,26 @@
 <meta charset="utf-8">
 <head> 
   <title>w34's MySQL</title> 
+  <style>
+  .root_query{
+    text-align: center;
+    background-color:#FFD700;
+  }
+  .text_query{
+    width:600px;
+    padding: 20px;
+    border: 5px;
+    border-style: groove;
+    border-color: #FFA500;
+  }
+  .root_query_submit{
+    width: 75px;
+    height: 50px;
+  }
+  td{
+    padding: 5px;
+  }
+  </style>
 </head>
 <div id="header" style="background-color:#FFA500;">
 <h1 style="text-align:center">数据表控制台</h1>
@@ -24,6 +44,63 @@ if ($conn->connect_error) {
   header('Location: index.php?error_message=' . urlencode($error_message));
 }
 ?>
+<div class="root_query">
+  <div style="width:500px"></div>
+  <div id="root_query" style="">
+    <form method="post" action="sql.php">
+      <input type="hidden" name="root_query" value=1>
+      <input type="hidden" name="username" value=<?php echo $username;?>>
+      <input type="hidden" name="password" value=<?php echo $password;?>>
+      <input class="text_query" type="text" name="text_query" placeholder="从数据库homework中查询">
+      <input class="root_query_submit" type="submit" name="submit_root_query" value="查询">
+    </form>
+  </div>
+  <div class="result">
+    <?php
+      if (isset($_POST['root_query'])) {
+        if($_POST['username']!='root'){
+          printf("<p style=\"color: red;width=500;\">非root用户</p>");
+        }
+        else{
+          $sql = $_POST['text_query'];
+          if(substr($_POST['text_query'],0,6)!='SELECT'&&substr($_POST['text_query'],0,6)!='select'){
+            printf("<p style=\"color: red;width=500;\">非SELECT语句</p>");
+          }
+          else{
+            $result = $conn->query($sql);
+            printf("<div style=\"width=400\"></div>");
+            printf("<table border=\"1\" style=\"margin-left: 100px;\">");
+            printf("<tbody>");
+            $fields = mysqli_fetch_fields($result);
+            $column_names = array();
+            foreach ($fields as $field) {
+                $column_names[] = $field->name;
+            }
+            echo "<tr>";
+            foreach ($column_names as $column_name) {
+                echo "<th>" . $column_name . "</th>";
+            }
+            echo "</tr>";
+            while ($row = mysqli_fetch_assoc($result)) {
+                printf("<tr>");
+                foreach ($column_names as $column_name) {
+                  printf("<td>%s</td>",$row[$column_name]);
+                }
+                printf("</tr>");
+            }
+            // printf("<colgroup>");
+            // printf("<col >");
+            // printf("<col >");
+            // printf("<col >");
+            // printf("</colgroup>");
+            printf("</tbody></table>");
+          }
+        }
+      }
+    ?>
+  </div>
+</div>
+<hr>
 <table cellspacing="100" style="background-color:#FFD700;">
   <tr>
   <td id="Table:user" style="width:500px;vertical-align:top;">
@@ -153,9 +230,9 @@ if ($conn->connect_error) {
       if (isset($_POST['user_update_error_message'])&&$_POST['user_update_error_message']!='ok') {
         $user_update_error_message = $_POST['user_update_error_message'];
         printf("%s<br>",urldecode($user_update_error_message));
-        // if(substr(urldecode($user_delete_error_message),0,21)=='DELETE command denied'){
-        //   printf("账号%s不具有该表的删除权限",$username);
-        // }
+        if(substr(urldecode($user_delete_error_message),0,21)=='UPDATE command denied'){
+          printf("账号%s不具有该表的修改权限",$username);
+        }
       }
     ?>
     </p>
@@ -183,15 +260,15 @@ if ($conn->connect_error) {
       }
       add_user_show++;
     });
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'insert.php');
-      xhr.send(formData);
-      location.reload();
-    });
+    // var form = document.querySelector('form');
+    // form.addEventListener('submit', function(event) {
+    //   event.preventDefault();
+    //   var formData = new FormData(form);
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open('POST', 'insert.php');
+    //   xhr.send(formData);
+    //   location.reload();
+    // });
     </script>
   </td>
 
@@ -358,15 +435,15 @@ if ($conn->connect_error) {
       }
       add_video_show++;
     });
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'insert.php');
-      xhr.send(formData);
-      location.reload();
-    });
+    // var form = document.querySelector('form');
+    // form.addEventListener('submit', function(event) {
+    //   event.preventDefault();
+    //   var formData = new FormData(form);
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open('POST', 'insert.php');
+    //   xhr.send(formData);
+    //   location.reload();
+    // });
     </script>
   </td>
   </tr>
@@ -528,15 +605,15 @@ if ($conn->connect_error) {
       }
       add_staff_show++;
     });
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'insert.php');
-      xhr.send(formData);
-      location.reload();
-    });
+    // var form = document.querySelector('form');
+    // form.addEventListener('submit', function(event) {
+    //   event.preventDefault();
+    //   var formData = new FormData(form);
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open('POST', 'insert.php');
+    //   xhr.send(formData);
+    //   location.reload();
+    // });
     </script>
   </td>
   <td id="Table:comment" style="width:1100px;vertical-align:top;">
@@ -702,15 +779,15 @@ if ($conn->connect_error) {
       }
       add_comment_show++;
     });
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      var formData = new FormData(form);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'insert.php');
-      xhr.send(formData);
-      location.reload();
-    });
+    // var form = document.querySelector('form');
+    // form.addEventListener('submit', function(event) {
+    //   event.preventDefault();
+    //   var formData = new FormData(form);
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open('POST', 'insert.php');
+    //   xhr.send(formData);
+    //   location.reload();
+    // });
     </script>
   </td>
   </tr>
