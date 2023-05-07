@@ -4,7 +4,8 @@
   <title>w34's MySQL</title> 
 </head>
 <div id="header" style="background-color:#FFA500;">
-<h1 style="margin-bottom:0;">以<?php echo $_POST["username"]; ?>登录到mysql</h1></div>
+<h1 style="text-align:center">数据表控制台</h1>
+<h2 style="text-align:center;margin-bottom:0;">当前mysql登录用户：<?php echo $_POST["username"]; ?></h2></div>
 <hr>
 
 <?php
@@ -419,13 +420,14 @@ if ($conn->connect_error) {
           <th>id</th>
           <th>videoID</th>
           <th>author</th>
-          <th>repTo</th>
+          <th>time</th>
+          <th>repto</th>
           <th>commentText</th>
         </tr>
         <?php
             while($row = mysqli_fetch_assoc($result)) {
-                printf("<tr> <td>%d</td> <td>%d</td> <td>%s</td>  <td>%s</td> <td>%s</td> </tr>",
-                $row["id"],$row["videoID"], $row["author"],$row["repTo"],$row["commentText"]);
+                printf("<tr> <td>%d</td> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> </tr>",
+                $row["id"],$row["videoID"], $row["author"],$row['commentTime'],$row["repto"],$row["commentText"]);
             }
         ?>
       </tbody>
@@ -434,7 +436,8 @@ if ($conn->connect_error) {
         <col width="100">
         <col width="200">
         <col width="100">
-        <col width="650">
+        <col width="200">
+        <col width="450">
       </colgroup>
     </table>
     <button id="add_comment">添加</button>
@@ -445,8 +448,8 @@ if ($conn->connect_error) {
         <input type="hidden" name="password" value=<?php echo $password;?>>
         <input type="text" name="videoIDAdd" placeholder="videoID" style="width=300;"><br>
         <input type="text" name="authorAdd" placeholder="author" style="width=300;"><br>
-        <input type="text" name="repidAdd" placeholder="repid" style="width=300;"><br>
-        <input type="text" name="repAdd" placeholder="rep" style="width=300;"><br>
+        <input type="text" name="reptoAdd" placeholder="repto" style="width=300;"><br>
+        <!-- <input type="text" name="repAdd" placeholder="rep" style="width=300;"><br> -->
         <input type="text" name="commentTextAdd" placeholder="commentText" style="width=300;"><br>
         <input type="submit" name="submit" value="提交">
       </form>

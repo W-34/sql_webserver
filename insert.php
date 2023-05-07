@@ -71,24 +71,22 @@ if (isset($_POST['insert_user'])) {
     // 在这里将表单数据插入数据库
     $videoIDAdd=str_check($_POST['videoIDAdd']);
     $authorAdd=str_check($_POST['authorAdd']);
-    $repidAdd=str_check($_POST['repidAdd']);
-    $repAdd=str_check($_POST['repAdd']);
+    $reptoAdd=str_check($_POST['reptoAdd']);
+    // $repAdd=str_check($_POST['repAdd']);
     $commentTextAdd=str_check($_POST['commentTextAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
-    if($repidAdd==''&&$repAdd==''){
-        $sql = "INSERT INTO comment (videoID,author,commentText) VALUES ('$videoIDAdd','$authorAdd','$commentTextAdd')";
+    if($reptoAdd==''){
+        $sql = "INSERT INTO comment (videoID,author,commentTime,commentText) VALUES ('$videoIDAdd','$authorAdd',now(),'$commentTextAdd')";
     }
     else{
-        $sql = "INSERT INTO comment (videoID,author,repid,rep,commentText) VALUES ('$videoIDAdd','$authorAdd','$repidAdd','$repAdd','$commentTextAdd')";
+        $sql = "INSERT INTO comment (videoID,author,commentTime,repto,commentText) VALUES ('$videoIDAdd','$authorAdd',now(),'$reptoAdd','$commentTextAdd')";
     }
     $result=$mysqli->query($sql);
     $comment_insert_error_message='ok';
     if($result==false){
-    //echo '<p>$mysqli->error</p>';
-    $comment_insert_error_message=urlencode($mysqli->error);
+        $comment_insert_error_message=urlencode($mysqli->error);
     }
     else{
-    //echo "success";
     }
 }else if(isset($_POST['insert_staff'])){
     // 在这里将表单数据插入数据库
