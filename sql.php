@@ -91,6 +91,33 @@ if ($conn->connect_error) {
       delete_user_show++;
     });
     </script>
+    <button id="update_user">修改</button>
+    <div id="update_user_formContainer" style="display:none;">
+      <form method="post" action="update.php">
+        <input type="hidden" name="update_user" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        update user set <input type="text" name="userToUpdate" placeholder="修改的内容" style="width=150;"><br>
+         where <input type="text" name="userToUpdateCondition" placeholder="true" style="width=150;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var update_user = document.getElementById("update_user");
+    var update_user_formContainer = document.getElementById("update_user_formContainer");
+    var update_user_show=0;
+    update_user.addEventListener("click", function() {
+      if(update_user_show%2==0){
+        update_user_formContainer.style.display = "block";
+        update_user.innerHTML='隐藏';
+      }
+      else{
+        update_user_formContainer.style.display='none';
+        update_user.innerHTML='修改';
+      }
+      update_user_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['user_insert_error_message'])&&$_POST['user_insert_error_message']!='ok') {
@@ -121,6 +148,26 @@ if ($conn->connect_error) {
       }
     ?>
     </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['user_update_error_message'])&&$_POST['user_update_error_message']!='ok') {
+        $user_update_error_message = $_POST['user_update_error_message'];
+        printf("%s<br>",urldecode($user_update_error_message));
+        // if(substr(urldecode($user_delete_error_message),0,21)=='DELETE command denied'){
+        //   printf("账号%s不具有该表的删除权限",$username);
+        // }
+      }
+    ?>
+    </p>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['user_update_info_message'])&&$_POST['user_update_info_message']!='') {
+        $user_update_info_message = $_POST['user_update_info_message'];
+        printf("%s条数据被修改<br>",urldecode($user_update_info_message));
+      }
+    ?>
+    </p>
     <script>
     var add_user = document.getElementById("add_user");
     var add_user_formContainer = document.getElementById("add_user_formContainer");
@@ -138,14 +185,11 @@ if ($conn->connect_error) {
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
-      event.preventDefault(); // 阻止表单默认提交事件
-      // 获取表单数据
+      event.preventDefault();
       var formData = new FormData(form);
-      // 发送 AJAX 请求将表单数据提交到服务器端
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'insert.php');
       xhr.send(formData);
-      // 刷新页面
       location.reload();
     });
     </script>
@@ -222,6 +266,33 @@ if ($conn->connect_error) {
       delete_video_show++;
     });
     </script>
+    <button id="update_video">修改</button>
+    <div id="update_video_formContainer" style="display:none;">
+      <form method="post" action="update.php">
+        <input type="hidden" name="update_video" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        update video set <input type="text" name="videoToUpdate" placeholder="修改的内容" style="width=300;">
+        <br>where <input type="text" name="videoToUpdateCondition" placeholder="true" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var update_video = document.getElementById("update_video");
+    var update_video_formContainer = document.getElementById("update_video_formContainer");
+    var update_video_show=0;
+    update_video.addEventListener("click", function() {
+      if(update_video_show%2==0){
+        update_video_formContainer.style.display = "block";
+        update_video.innerHTML='隐藏';
+      }
+      else{
+        update_video_formContainer.style.display='none';
+        update_video.innerHTML='修改';
+      }
+      update_video_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['video_insert_error_message'])&&$_POST['video_insert_error_message']!='ok') {
@@ -252,6 +323,26 @@ if ($conn->connect_error) {
       }
     ?>
     </p>
+    </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['video_update_error_message'])&&$_POST['video_update_error_message']!='ok') {
+        $video_update_error_message = $_POST['video_update_error_message'];
+        printf("%s<br>",urldecode($video_update_error_message));
+        if(substr(urldecode($video_update_error_message),0,21)=='UPDATE command denied'){
+          printf("账号%s不具有该表的修改权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['video_update_info_message'])&&$_POST['video_update_info_message']!='') {
+        $video_update_info_message = $_POST['video_update_info_message'];
+        printf("%s条数据被修改<br>",urldecode($video_update_info_message));
+      }
+    ?>
+    </p>
     <script>
     var add_video = document.getElementById("add_video");
     var add_video_formContainer = document.getElementById("add_video_formContainer");
@@ -269,14 +360,11 @@ if ($conn->connect_error) {
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
-      event.preventDefault(); // 阻止表单默认提交事件
-      // 获取表单数据
+      event.preventDefault();
       var formData = new FormData(form);
-      // 发送 AJAX 请求将表单数据提交到服务器端
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'insert.php');
       xhr.send(formData);
-      // 刷新页面
       location.reload();
     });
     </script>
@@ -349,6 +437,33 @@ if ($conn->connect_error) {
       delete_staff_show++;
     });
     </script>
+    <button id="update_staff">修改</button>
+    <div id="update_staff_formContainer" style="display:none;">
+      <form method="post" action="update.php">
+        <input type="hidden" name="update_staff" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        update staff set <input type="text" name="staffToUpdate" placeholder="修改的内容" style="width=300;"><br>
+        where<input type="text" name="staffToUpdateCondition" placeholder="true" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var update_staff = document.getElementById("update_staff");
+    var update_staff_formContainer = document.getElementById("update_staff_formContainer");
+    var update_staff_show=0;
+    update_staff.addEventListener("click", function() {
+      if(update_staff_show%2==0){
+        update_staff_formContainer.style.display = "block";
+        update_staff.innerHTML='隐藏';
+      }
+      else{
+        update_staff_formContainer.style.display='none';
+        update_staff.innerHTML='修改';
+      }
+      update_staff_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['staff_insert_error_message'])&&$_POST['staff_insert_error_message']!='ok') {
@@ -379,6 +494,25 @@ if ($conn->connect_error) {
       }
     ?>
     </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['staff_update_error_message'])&&$_POST['staff_update_error_message']!='ok') {
+        $staff_update_error_message = $_POST['staff_update_error_message'];
+        printf("%s<br>",urldecode($staff_update_error_message));
+        if(substr(urldecode($staff_update_error_message),0,21)=='UPDATE command denied'){
+          printf("账号%s不具有该表的修改权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['staff_update_info_message'])&&$_POST['staff_update_info_message']!='') {
+        $staff_update_info_message = $_POST['staff_update_info_message'];
+        printf("%s条数据被修改<br>",urldecode($staff_update_info_message));
+      }
+    ?>
+    </p>
     <script>
     var add_staff = document.getElementById("add_staff");
     var add_staff_formContainer = document.getElementById("add_staff_formContainer");
@@ -396,14 +530,11 @@ if ($conn->connect_error) {
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
-      event.preventDefault(); // 阻止表单默认提交事件
-      // 获取表单数据
+      event.preventDefault();
       var formData = new FormData(form);
-      // 发送 AJAX 请求将表单数据提交到服务器端
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'insert.php');
       xhr.send(formData);
-      // 刷新页面
       location.reload();
     });
     </script>
@@ -480,6 +611,33 @@ if ($conn->connect_error) {
       delete_comment_show++;
     });
     </script>
+    <button id="update_comment">修改</button>
+    <div id="update_comment_formContainer" style="display:none;">
+      <form method="post" action="update.php">
+        <input type="hidden" name="update_comment" value=1>
+        <input type="hidden" name="username" value=<?php echo $username;?>>
+        <input type="hidden" name="password" value=<?php echo $password;?>>
+        update comment set <input type="text" name="commentToUpdate" placeholder="修改的内容" style="width=300;"><br>
+        where <input type="text" name="commentToUpdateCondition" placeholder="true" style="width=300;"><br>
+        <input type="submit" name="submit" value="提交">
+      </form>
+    </div>
+    <script>
+    var update_comment = document.getElementById("update_comment");
+    var update_comment_formContainer = document.getElementById("update_comment_formContainer");
+    var update_comment_show=0;
+    update_comment.addEventListener("click", function() {
+      if(update_comment_show%2==0){
+        update_comment_formContainer.style.display = "block";
+        update_comment.innerHTML='隐藏';
+      }
+      else{
+        update_comment_formContainer.style.display='none';
+        update_comment.innerHTML='修改';
+      }
+      update_comment_show++;
+    });
+    </script>
     <p style="color: red;width=500;">
     <?php
       if (isset($_POST['comment_insert_error_message'])&&$_POST['comment_insert_error_message']!='ok') {
@@ -510,6 +668,25 @@ if ($conn->connect_error) {
       }
     ?>
     </p>
+    <p style="color: red;width=500;">
+    <?php
+      if (isset($_POST['comment_update_error_message'])&&$_POST['comment_update_error_message']!='ok') {
+        $comment_update_error_message = $_POST['comment_update_error_message'];
+        printf("%s<br>",urldecode($comment_update_error_message));
+        if(substr(urldecode($comment_update_error_message),0,21)=='UPDATE command denied'){
+          printf("账号%s不具有该表的修改权限",$username);
+        }
+      }
+    ?>
+    </p>
+    <p style="color: green;width=500;">
+    <?php
+      if (isset($_POST['comment_update_info_message'])&&$_POST['comment_update_info_message']!='') {
+        $comment_update_info_message = $_POST['comment_update_info_message'];
+        printf("%s条数据被修改<br>",urldecode($comment_update_info_message));
+      }
+    ?>
+    </p>
     <script>
     var add_comment = document.getElementById("add_comment");
     var add_comment_formContainer = document.getElementById("add_comment_formContainer");
@@ -527,14 +704,11 @@ if ($conn->connect_error) {
     });
     var form = document.querySelector('form');
     form.addEventListener('submit', function(event) {
-      event.preventDefault(); // 阻止表单默认提交事件
-      // 获取表单数据
+      event.preventDefault();
       var formData = new FormData(form);
-      // 发送 AJAX 请求将表单数据提交到服务器端
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'insert.php');
       xhr.send(formData);
-      // 刷新页面
       location.reload();
     });
     </script>
