@@ -57,7 +57,7 @@ if (isset($_POST['insert_user'])) {
     $channelAdd=str_check($_POST['channelAdd']);
     $urlAdd=str_check($_POST['urlAdd']);
     $mysqli = new mysqli("8.130.102.240",$username,$password,$dbname);
-    $sql = "INSERT INTO video (title,author,date,channel,url,likes) VALUES ('$titleAdd','$authorAdd',now(),'$channelAdd','$urlAdd',0)";
+    $sql = "INSERT INTO video (title,author,date,channel,url) VALUES ('$titleAdd','$authorAdd',now(),'$channelAdd','$urlAdd')";
     $result=$mysqli->query($sql);
 
     $video_insert_error_message='ok';
