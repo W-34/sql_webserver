@@ -54,19 +54,41 @@ try {
 } catch (Exception $e) {
     echo '邮件发送失败：', $mail->ErrorInfo;
 }
+
+
 $sql_servername = "8.130.102.240";
 $sql_username = getenv('ADMIN_USERNAME');
 $sql_password = getenv('ADMIN_PASSWORD');
 $sql_dbname = "MailVerify";
-$sql_conn = new mysqli($sql_servername, $sql_username, $sql_password, $sql_dbname);
+// $sql_conn = new mysqli($sql_servername, $sql_username, $sql_password, $sql_dbname);
+$sql_conn=odbc_connect($sql_servername,$sql_username,$sql_password);
 if ($sql_conn->connect_error) {
     echo '<p style=\'color:red;\'>内部错误，请与管理员联系</p>';
 }
 else{
+    $error_message=null;
     if($isAuthor!=1)$isAuthor=0;
-    $query='insert into token (token,username,password,isAuthor)values(\''.$token.'\',\''.$username.'\',\''.$password.'\','.$isAuthor.')';
-    $sql_conn->query($query);
-    if($sql_conn->error){
+    // $query='insert into token (token,username,password,isAuthor)values(\''.$token.'\',\''.$username.'\',\''.$password.'\','.$isAuthor.')';
+    $query='{call addUser(?,?,?,?,?)}';
+    $stmt=odbc_prepare($sql_conn,$query);
+    // $sql_conn->query($query);
+    odbc_bind_param($stmt,1,$token,SQL_PARAM_INPUT);
+    odbc_bind_param($stmt,2,$username,SQL_PARAM_INPUT);
+    odbc_bind_param($stmt,3,$password,SQL_PARAM_INPUT);
+    odbc_bind_param($stmt,4,$isAuthor,SQL_PARAM_INPUT);
+    odbc_bind_param($stmt,5,$error_message,SQL_PARAM_OUTPUT);
+    // if($sql_conn->error){
+    //     echo '<p style=\'color:red;\'>创建token失败，请与管理员联系</p>';
+    // }
+    // else{
+    //     echo'<p>请查看邮箱，点击验证链接完成注册</p>';
+    // }
+    odbc_execute($stmt);
+    odbc_fetch_into($stmt,$row);
+    $error_message= $row[0];
+    odbc_close($sql_conn);
+    if($error_message!=null){
+        echo '<p style=\'color:red;\'>'.$error_message.'</p><br>';
         echo '<p style=\'color:red;\'>创建token失败，请与管理员联系</p>';
     }
     else{
