@@ -20,50 +20,45 @@
     }
 ?>
 <?php
-$servername = "8.130.102.240";
-$username = getenv('ADMIN_USERNAME');
-$password = getenv('ADMIN_PASSWORD');
-$MailVerify = "MailVerify";
+// $servername = "8.130.102.240";
 $homework ='homework';
-$conn = new mysqli($servername, $username, $password, $MailVerify);
-if ($conn->connect_error) {
+$sql_servername="MailVerify";
+$sql_username = getenv('ADMIN_USERNAME');
+$sql_password = getenv('ADMIN_PASSWORD');
+$conn=odbc_connect($sql_servername,$sql_username,$sql_password);
+$conn2=odbc_connect($homework,$sql_username,$sql_password);
+if (!$conn||!$conn2) {
     echo '<p style=\'color:red;\'>网络错误，请与管理员联系</p>';
 }
 else{
-    $query='select username,password from token where token=\''.str_check($_GET['token']).'\'';
-    $result=$conn->query($query);
+    // $query='select username,password from token where token=\''.str_check($_GET['token']).'\'';
+    $token=$_GET['token'];
+    $query='{call querytoken(?,?,?)}';
+    $stmt=odbc_prepare($conn,$query);
     if($conn->error){
+        odbc_close($conn);
+        odbc_close($conn2);
         echo '<p>token错误，5秒后跳转到注册页面</p>';
         header('refresh:5;url=http://8.130.102.240/signup.html');
     }
     else{
-        if($row = mysqli_fetch_assoc($result)) {
-            $register='create user \''.$row['username'].'\'@\'%\' identified by \''.$row['password'].'\'';
-            $conn->query($register);
-            if($conn->error){
-                echo '<p>注册失败，请与管理员联系</p>';
-                echo '<p style=\'color:red;\'>'.$conn->error.'</p>';
-            }
-            else{
-                $conn1=new mysqli($servername,$username,$password,$homework);
-                if ($conn1->connect_error) {
-                    echo '<p style=\'color:red;\'>网络错误，请与管理员联系</p>';
-                }
-                else{
-                    $addUser='insert into user(username,passwdEncrypted,name)values(\''.$row['username'].'\',SHA2(\''.$row['password'].'\',256),\''.'USER_'.generateRandomString(12).'\')';
-                    $conn1->query($addUser);
-                    if($conn1->error){
-                        echo '<p style=\'color:red;\'>创建用户失败：</p>';
-                        echo '<p style=\'color:red;\'>'.$conn1->error.'</p>';
-                    }
-                    else{
-                        echo '<p>注册成功</p>';
-                        echo '<p>5秒后返回登录页面</p>';
-                        header('refresh:5;url=http://8.130.102.240/index.php');
-                    }
-                }
-            }
+        $username=null;
+        $password=null;
+        odbc_execute($stmt,array($token,$username,$password));
+        if($username!=null&&$password!=null) {
+            $register='create user \''.'?'.'\'@\'%\' identified by \''.'?'.'\'';
+            $stmt1=odbc_prepare($conn,$register);
+            odbc_execute($stmt1,array($username,$password));
+            $op='{call insertUser(?,?,?)}';
+            $stmt2=odbc_prepare($conn,$op);
+            $randomName='USER_'+generateRandomString(12);
+            odbc_execute($stmt2,array($username,$password,$randomName));
+            echo '<p>注册成功</p>';
+            echo '<p>5秒后返回登录页面</p>';
+            header('refresh:5;url=http://8.130.102.240/index.php');
         }
     }
+    odbc_close($conn);
+    odbc_close($conn2);
 }
 ?>
