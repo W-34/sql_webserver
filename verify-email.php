@@ -35,7 +35,7 @@ if (!$conn||!$conn2) {
 else{
     // $query='select username,password,isAuthor from token where token=\''.str_check($_GET['token']).'\'';
     $token=$_GET['token'];
-    $query='{call querytoken(?,?,?)}';
+    $query='{call querytoken(?,?,?,?)}';
     $stmt=odbc_prepare($conn,$query);
     $username=null;
     $password=null;
