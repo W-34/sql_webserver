@@ -95,7 +95,7 @@
                 border-color: #FFA500;
               }
               .none1{
-                height: 205px;
+                height: 307px;
                 text-align: center;
                 border-style: solid;
                 border-width: 2px;
@@ -175,13 +175,65 @@
                 margin: 5px;
                 text-align: center;
               }
-              
+              .sidebar {
+                position: fixed;
+                top: 0;
+                right: -300px; /* 初始时将侧边栏移出屏幕 */
+                width: 300px;
+                height: 900px;
+                background-color: #f0f0f0;
+                border-style: solid;
+                border-width: 2px;
+                border-color: red;
+                transition: right 0.3s ease; /* 添加过渡效果，使侧边栏平滑滑入滑出 */
+                z-index: 998; /* 设置侧边栏的层级，使其在上方显示 */
+              }
+              .buttonCloseComment{
+                position: fixed;
+                top: 400px;
+                right: -300px;
+                width: 30px;
+                height: 90px;
+                transition: right 0.3s ease;
+                z-index: 999;
+              }
+              .sidebar.active {
+                right: 0px; /* 通过添加 active 类将侧边栏滑入屏幕 */
+              }
+              .buttonCloseComment.active{
+                right: 300px;
+              }
         </style>
+        <script>
+          function getNextVideo(){
+            var result='videos/test.mp4'
+            var xhr = new XMLHttpRequest();
+            var responseData;
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                  responseData = JSON.parse(xhr.responseText);
+                  console.log(responseData);
+                } else {
+                  console.error('请求失败');
+                }
+              }
+            };
+            xhr.open('GET', 'getRandomVideo.php', true);
+            xhr.send();
+            return responseData.url;
+          }
+        </script>
 	</head>
 	<body>
+    <!-- 评论区页面 -->
+    <div class="sidebar" id="sidebar">
+      <iframe src="comment.php?videoID=1" frameborder="0" width="300" height="900"></iframe>
+    </div>
     <div class="top">
         <div class="aboutme">
-            <p>个人页</p>
+            <!-- <p>个人页</p> -->
+            <img src="src/user_Me.png" alt="用户头像" width="70" height="70"><br>
         </div>
         <div class="search">
             <p>搜索</p>
@@ -212,10 +264,34 @@
         </div>
         <div class="middle-right">
             <div class="time">
-                <p>时间</p>
+                <!-- <p>时间</p> -->
+                <p id="currentTime"></p>
+                <script>
+                  function formatTime(time) {
+                    return time < 10 ? "0" + time : time;
+                  }
+                  function updateTime() {
+                    var now = new Date();
+                    var hours = formatTime(now.getHours());
+                    var minutes = formatTime(now.getMinutes());
+                    var seconds = formatTime(now.getSeconds());
+                    var timeString = hours + ":" + minutes + ":" + seconds;
+                    var timezoneOffset = getTimezoneOffsetString(now.getTimezoneOffset());
+                    var timeZoneString = " UTC" + timezoneOffset;
+                    document.getElementById("currentTime").innerHTML = timeString + timeZoneString;
+                  }
+                  function getTimezoneOffsetString(offset) {
+                    var hours = Math.floor(Math.abs(offset) / 60);
+                    var minutes = Math.abs(offset) % 60;
+                    var sign = offset > 0 ? "-" : "+";
+                    var offsetString = sign + formatTime(hours) + ":" + formatTime(minutes);
+                    return offsetString;
+                  }
+                  setInterval(updateTime, 1000);
+                </script>                
             </div>
             <div class="none1">
-                <p>占位置的</p>
+                <!-- <p>占位置的</p> -->
             </div>
             <div class="like">
                 <!-- <p>喜欢</p> -->
@@ -229,11 +305,19 @@
             </div>
             <div class="comment">
                 <!-- <p>评论</p> -->
-                <button id="buttonLike" style="width: 70px;height: 70px;">点赞</button>
+                <button id="buttonComment" style="width: 70px;height: 70px;">评论</button>
+                <button class="buttonCloseComment" id="buttonCloseComment">></button>
                 <script>
-                  var buttonLike=document.getElementById('buttonLike');
-                  buttonLike.addEventListener('click',function(event){
-
+                  var buttonComment=document.getElementById('buttonComment');
+                  var buttonCloseComment=document.getElementById('buttonCloseComment');
+                  var sidebar=document.getElementById('sidebar');
+                  buttonComment.addEventListener('click',function(event){
+                    sidebar.classList.add('active');
+                    buttonCloseComment.classList.add('active');
+                  });
+                  buttonCloseComment.addEventListener('click',function(event){
+                    sidebar.classList.remove('active');
+                    buttonCloseComment.classList.remove('active');
                   });
                 </script>
             </div>
@@ -269,7 +353,7 @@
             <button id="buttonNextVideo" style="width: 96px;height: 54px;">下一个视频</button>
             <script>
               var buttonNextVideo=document.getElementById('buttonNextVideo');
-              var nextVideo='videos/test.mp4';
+              var nextVideo=getNextVideo();
               buttonNextVideo.addEventListener('click',function(event){
                 videoSource.src=nextVideo;
                 video.pause();
