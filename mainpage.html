@@ -95,7 +95,7 @@
                 border-color: #FFA500;
               }
               .none1{
-                height: 405px;
+                height: 205px;
                 text-align: center;
                 border-style: solid;
                 border-width: 2px;
@@ -146,9 +146,10 @@
                 margin: 5px;
                 margin-right: 100px;
               }
-              .more{
+              .next{
                 float: left;
                 width: 100px;
+                height: 57px;
                 border-style: solid;
                 border-width: 2px;
                 border-color: red;
@@ -194,10 +195,20 @@
     </div>
     <div class="middle">
         <div class="middle-left">
-            <p>个人页</p>
+            <!-- <p>个人页</p> -->
+            <iframe src="me.php" width="140" height="710"></iframe>
         </div>
         <div class="videostream">
-            <p>视频流</p>
+            <!-- <p>视频流</p> -->
+            <video id="video" width="1430" height="710" autoplay controls loop>
+              <source id="videoSource" src="videos/movie.mp4" type="video/mp4">
+              <!-- <source src="movie.ogg" type="video/ogg"> -->
+            您的浏览器不支持Video标签,视频无法显示。
+            </video>
+            <script>
+              var video=document.getElementById('video');
+              var videoSource=document.getElementById('videoSource');
+            </script>
         </div>
         <div class="middle-right">
             <div class="time">
@@ -207,16 +218,45 @@
                 <p>占位置的</p>
             </div>
             <div class="like">
-                <p>喜欢</p>
+                <!-- <p>喜欢</p> -->
+                <button id="buttonLike" style="width: 70px;height: 70px;">点赞</button>
+                <script>
+                  var buttonLike=document.getElementById('buttonLike');
+                  buttonLike.addEventListener('click',function(event){
+
+                  });
+                </script>
             </div>
             <div class="comment">
-                <p>评论</p>
+                <!-- <p>评论</p> -->
+                <button id="buttonLike" style="width: 70px;height: 70px;">点赞</button>
+                <script>
+                  var buttonLike=document.getElementById('buttonLike');
+                  buttonLike.addEventListener('click',function(event){
+
+                  });
+                </script>
             </div>
             <div class="subscribe">
-                <p>订阅</p>
+                <!-- <p>订阅</p> -->
+                <img src="src/user.png" alt="用户头像" width="80" height="80"><br>
+                <button id="buttonSubscribe">关注</button>
+                <script>
+                  var buttonSubscribe=document.getElementById('buttonSubscribe');
+                  buttonSubscribe.addEventListener('click',function(event){
+
+                  });
+                </script>
             </div>
             <div class="forward">
-                <p>转发</p>
+                <!-- <p>转发</p> -->
+                <button id="buttonRelay" style="width: 70px;height: 70px;">转发</button>
+                <script>
+                  var buttonRelay=document.getElementById('buttonRelay');
+                  buttonRelay.addEventListener('click',function(event){
+
+                  });
+                </script>
             </div>
         </div>
     </div>
@@ -224,8 +264,19 @@
         <div class="news">
             <p>动态</p>
         </div>
-        <div class="more">
-            <p>更多功能</p>
+        <div class="next">
+            <!-- <p>下一个</p> -->
+            <button id="buttonNextVideo" style="width: 96px;height: 54px;">下一个视频</button>
+            <script>
+              var buttonNextVideo=document.getElementById('buttonNextVideo');
+              var nextVideo='videos/test.mp4';
+              buttonNextVideo.addEventListener('click',function(event){
+                videoSource.src=nextVideo;
+                video.pause();
+                video.load();
+                video.play();
+              });
+            </script>
         </div>
         <div class="tags">
             <p>标签</p>
