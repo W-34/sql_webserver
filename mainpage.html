@@ -206,10 +206,6 @@
         </style>
 	</head>
 	<body>
-    <!-- 评论区页面 -->
-    <div class="sidebar" id="sidebar">
-      <iframe src="comment.php?videoID=1" frameborder="0" width="300" height="900"></iframe>
-    </div>
     <div class="top">
         <div class="aboutme">
             <!-- <p>个人页</p> -->
@@ -283,6 +279,13 @@
                   });
                 </script>
             </div>
+            <!-- 评论区页面 -->
+            <div class="sidebar" id="sidebar">
+              <iframe id="commentPage" src="comment.php?videoID=11" frameborder="0" width="300" height="900"></iframe>
+              <script>
+                var commentPage=document.getElementById('commentPage');
+              </script>
+            </div>
             <div class="comment">
                 <!-- <p>评论</p> -->
                 <button id="buttonComment" style="width: 70px;height: 70px;">评论</button>
@@ -332,6 +335,9 @@
             <!-- <p>下一个</p> -->
             <button id="buttonNextVideo" style="width: 96px;height: 54px;">下一个视频</button>
             <script>
+              function changeCommentPage(videoID){
+                commentPage.src="comment.php?videoID="+videoID;
+              }
               function getNextVideo(){
                 var result='videos/test.mp4'
                 var xhr = new XMLHttpRequest();
@@ -345,6 +351,7 @@
                       video.pause();
                       video.load();
                       video.play();
+                      changeCommentPage(responseData.id);
                     } else {
                       console.error('请求失败');
                     }
