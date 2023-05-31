@@ -204,26 +204,6 @@
                 right: 300px;
               }
         </style>
-        <script>
-          function getNextVideo(){
-            var result='videos/test.mp4'
-            var xhr = new XMLHttpRequest();
-            var responseData;
-            xhr.onreadystatechange = function() {
-              if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                  responseData = JSON.parse(xhr.responseText);
-                  console.log(responseData);
-                } else {
-                  console.error('请求失败');
-                }
-              }
-            };
-            xhr.open('GET', 'getRandomVideo.php', true);
-            xhr.send();
-            return responseData.url;
-          }
-        </script>
 	</head>
 	<body>
     <!-- 评论区页面 -->
@@ -352,13 +332,36 @@
             <!-- <p>下一个</p> -->
             <button id="buttonNextVideo" style="width: 96px;height: 54px;">下一个视频</button>
             <script>
+              function getNextVideo(){
+                var result='videos/test.mp4'
+                var xhr = new XMLHttpRequest();
+                //var responseData;
+                xhr.onreadystatechange = function() {
+                  if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                      var responseData = JSON.parse(xhr.responseText);
+                      //console.log(responseData);
+                      videoSource.src=responseData.url;
+                      video.pause();
+                      video.load();
+                      video.play();
+                    } else {
+                      console.error('请求失败');
+                    }
+                  }
+                };
+                xhr.open('GET', 'getRandomVideo.php', true);
+                xhr.send();
+                //return responseData.url;
+              }
               var buttonNextVideo=document.getElementById('buttonNextVideo');
-              var nextVideo=getNextVideo();
+              //var nextVideo=getNextVideo();
               buttonNextVideo.addEventListener('click',function(event){
-                videoSource.src=nextVideo;
-                video.pause();
-                video.load();
-                video.play();
+                getNextVideo();
+                //videoSource.src=nextVideo;
+                //video.pause();
+                //video.load();
+                //video.play();
               });
             </script>
         </div>

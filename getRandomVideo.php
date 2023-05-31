@@ -12,11 +12,14 @@ if ($conn->connect_error) {
 $result = $conn->query($query);
 
 // 将查询结果转换为关联数组，并作为JSON格式返回
-$response = [];
+$response = new stdClass();
 
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
-    $response[] = $row;
+    foreach ($row as $key => $value) {
+      $response->$key = $value;
+    }
+    break;
   }
 }
 
