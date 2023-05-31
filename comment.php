@@ -50,18 +50,18 @@
         <!-- <button class="buttonClose" id="buttonClose">关闭页面</button> -->
         <div id='comment'>
             <?php
-            $query='select * from comment where videoID='.$videoID;
+            $query='select * from comment_fromuser where videoID='.$videoID;
             $result=$conn->query($query);
             while ($row = mysqli_fetch_assoc($result)) {
                 printf("<hr><p>");
                 // foreach ($column_names as $column_name) {
                 //   printf("<td>%s</td>",$row[$column_name]);
                 // }
-                printf("%s at %s ",$row['author'],$row['commentTime']);
-                if($row['repto']!=null){
-                    printf("回复 %s",$row['repto']);
+                printf("%s at %s <br>",$row['author'],$row['commentTime']);
+                if($row['repTo']!=null){
+                    printf("回复 %s :",$row['repTo']);
                 }
-                printf("\n%s\n",$row['commentText']);
+                printf("<br>%s<br>",$row['commentText']);
                 printf("</p>");
             }
             ?>

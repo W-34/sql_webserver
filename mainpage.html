@@ -209,7 +209,25 @@
     <div class="top">
         <div class="aboutme">
             <!-- <p>个人页</p> -->
-            <img src="src/user_Me.png" alt="用户头像" width="70" height="70"><br>
+            <img src="src/user_Me.png" alt="我的用户头像" width="70" height="70"><br>
+            <script>
+              function getMyPage(){
+                var myPageRequest = new XMLHttpRequest();
+                myPageRequest.onreadystatechange = function() {
+                  if (myPageRequest.readyState === XMLHttpRequest.DONE) {
+                    if (myPageRequest.status === 200) {
+                      var myPage = JSON.parse(myPageRequest.responseText);
+                      videoSource.src=myPage.url;
+                      changeCommentPage(myPage.id);
+                    } else {
+                      console.error('个人页请求失败');
+                    }
+                  }
+                };
+                myPageRequest.open('GET', 'getRandomVideo.php', true);
+                myPageRequest.send();
+              }
+            </script>
         </div>
         <div class="search">
             <p>搜索</p>
@@ -224,7 +242,7 @@
     <div class="middle">
         <div class="middle-left">
             <!-- <p>个人页</p> -->
-            <iframe src="me.php" width="140" height="710"></iframe>
+            <iframe src="login_new.php" width="140" height="710"></iframe>
         </div>
         <div class="videostream">
             <!-- <p>视频流</p> -->
@@ -341,7 +359,6 @@
               function getNextVideo(){
                 var result='videos/test.mp4'
                 var xhr = new XMLHttpRequest();
-                //var responseData;
                 xhr.onreadystatechange = function() {
                   if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -359,7 +376,6 @@
                 };
                 xhr.open('GET', 'getRandomVideo.php', true);
                 xhr.send();
-                //return responseData.url;
               }
               var buttonNextVideo=document.getElementById('buttonNextVideo');
               //var nextVideo=getNextVideo();
