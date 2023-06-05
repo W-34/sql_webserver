@@ -95,7 +95,7 @@
                 border-color: #FFA500;
               }
               .none1{
-                height: 307px;
+                height: 294px;
                 text-align: center;
                 border-style: solid;
                 border-width: 2px;
@@ -254,6 +254,7 @@
             <script>
               var video=document.getElementById('video');
               var videoSource=document.getElementById('videoSource');
+              var videoID=11;
             </script>
         </div>
         <div class="middle-right">
@@ -289,11 +290,28 @@
             </div>
             <div class="like">
                 <!-- <p>喜欢</p> -->
-                <button id="buttonLike" style="width: 70px;height: 70px;">点赞</button>
+                <!-- <button id="buttonLike" style="width: 70px;height: 70px;">点赞</button> -->
+                <!-- <button id="buttonLike" style="width: 76px;height: 76px;"></button> -->
+                <img id="imgLike" src="src/like0.png">
+                <br>
+                <b>Count: </b><b id="numLikes">0</b>
                 <script>
-                  var buttonLike=document.getElementById('buttonLike');
-                  buttonLike.addEventListener('click',function(event){
-
+                  //var buttonLike=document.getElementById('buttonLike');
+                  var imgLike=document.getElementById('imgLike');
+                  var likes=Number(document.getElementById('numLikes').innerHTML);
+                  var liked=false;
+                  imgLike.addEventListener('click',function(event){
+                    if(liked==false){
+                      liked=true;
+                      likes++;
+                      imgLike.src="src/like1.png";
+                    }
+                    else{
+                      liked=false;
+                      likes--;
+                      imgLike.src="src/like0.png";
+                    }
+                    document.getElementById("numLikes").innerText=String(likes);
                   });
                 </script>
             </div>
@@ -306,13 +324,15 @@
             </div>
             <div class="comment">
                 <!-- <p>评论</p> -->
-                <button id="buttonComment" style="width: 70px;height: 70px;">评论</button>
+                <!-- <button id="buttonComment" style="width: 70px;height: 70px;">评论</button> -->
+                <img id="imgComment" src="src/comment.png">
                 <button class="buttonCloseComment" id="buttonCloseComment">></button>
                 <script>
-                  var buttonComment=document.getElementById('buttonComment');
+                  //var buttonComment=document.getElementById('buttonComment');
+                  var imgComment=document.getElementById('imgComment');
                   var buttonCloseComment=document.getElementById('buttonCloseComment');
                   var sidebar=document.getElementById('sidebar');
-                  buttonComment.addEventListener('click',function(event){
+                  imgComment.addEventListener('click',function(event){
                     sidebar.classList.add('active');
                     buttonCloseComment.classList.add('active');
                   });
@@ -325,20 +345,24 @@
             <div class="subscribe">
                 <!-- <p>订阅</p> -->
                 <img src="src/user.png" alt="用户头像" width="80" height="80"><br>
-                <button id="buttonSubscribe">关注</button>
+                <!-- <button id="buttonSubscribe">关注</button> -->
+                <img id="imgSubscribe" src="src/subscribe.png">
                 <script>
-                  var buttonSubscribe=document.getElementById('buttonSubscribe');
-                  buttonSubscribe.addEventListener('click',function(event){
+                  //var buttonSubscribe=document.getElementById('buttonSubscribe');
+                  var imgSubscribe=document.getElementById('imgSubscribe');
+                  imgSubscribe.addEventListener('click',function(event){
 
                   });
                 </script>
             </div>
             <div class="forward">
                 <!-- <p>转发</p> -->
-                <button id="buttonRelay" style="width: 70px;height: 70px;">转发</button>
+                <!-- <button id="buttonRelay" style="width: 70px;height: 70px;">转发</button> -->
+                <img id="imgRelay" src="src/relay.png">
                 <script>
-                  var buttonRelay=document.getElementById('buttonRelay');
-                  buttonRelay.addEventListener('click',function(event){
+                  //var buttonRelay=document.getElementById('buttonRelay');
+                  var imgRelay=document.getElementById('imgRelay');
+                  imgRelay.addEventListener('click',function(event){
 
                   });
                 </script>
@@ -352,44 +376,10 @@
         <div class="next">
             <!-- <p>下一个</p> -->
             <button id="buttonNextVideo" style="width: 96px;height: 54px;">下一个视频</button>
-            <script>
-              function changeCommentPage(videoID){
-                commentPage.src="comment.php?videoID="+videoID;
-              }
-              function getNextVideo(){
-                var result='videos/test.mp4'
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                  if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                      var responseData = JSON.parse(xhr.responseText);
-                      //console.log(responseData);
-                      videoSource.src=responseData.url;
-                      video.pause();
-                      video.load();
-                      video.play();
-                      changeCommentPage(responseData.id);
-                    } else {
-                      console.error('请求失败');
-                    }
-                  }
-                };
-                xhr.open('GET', 'getRandomVideo.php', true);
-                xhr.send();
-              }
-              var buttonNextVideo=document.getElementById('buttonNextVideo');
-              //var nextVideo=getNextVideo();
-              buttonNextVideo.addEventListener('click',function(event){
-                getNextVideo();
-                //videoSource.src=nextVideo;
-                //video.pause();
-                //video.load();
-                //video.play();
-              });
-            </script>
+            
         </div>
         <div class="tags">
-            <p>标签</p>
+            <p class="channel" id="channel">标签</p>
         </div>
         <div class="report">
             <p>报告</p>
@@ -399,6 +389,47 @@
         <p>登录页</p>
     </div> -->
 	</body>
+  <script>
+    var channel=document.getElementById("channel");
+    function changeVideoTags(tags){
+      channel.innerHTML="Tags: "+tags;
+    }
+    function changeCommentPage(videoID){
+      commentPage.src="comment.php?videoID="+videoID;
+    }
+    function getNextVideo(){
+      var result='videos/test.mp4'
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            var responseData = JSON.parse(xhr.responseText);
+            //console.log(responseData);
+            videoID=responseData.id;
+            videoSource.src=responseData.url;
+            video.pause();
+            video.load();
+            video.play();
+            changeCommentPage(responseData.id);
+            changeVideoTags(responseData.channel)
+          } else {
+            console.error('请求失败');
+          }
+        }
+      };
+      xhr.open('GET', 'getRandomVideo.php', true);
+      xhr.send();
+    }
+    var buttonNextVideo=document.getElementById('buttonNextVideo');
+    //var nextVideo=getNextVideo();
+    buttonNextVideo.addEventListener('click',function(event){
+      getNextVideo();
+      //videoSource.src=nextVideo;
+      //video.pause();
+      //video.load();
+      //video.play();
+    });
+  </script>
     <footer>
         <p>版权所有 © w34</p>
     </footer>
