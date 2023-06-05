@@ -248,6 +248,7 @@
             <iframe id="myPage" src="login_new.php" width="140" height="710"></iframe>
             <script>
               var username;
+              var name;
             </script>
         </div>
         <div class="videostream">
@@ -347,15 +348,39 @@
                         }
                       }
                     };
-                    nameRequest.open('GET', 'getName.php?token='+token, true);
+                    nameRequest.open('GET', 'getName.php?token='+token.innerHTML, true);
                     nameRequest.send();
                   }
                   //var buttonLike=document.getElementById('buttonLike');
                   var imgLike=document.getElementById('imgLike');
                   var likes=Number(document.getElementById('numLikes').innerHTML);
                   var liked=false;
-                  function updateLikesState(){
-      
+                  function initLikesState(){
+                    //getName();
+                    var likesRequest = new XMLHttpRequest();
+                    likesRequest.onreadystatechange = function() {
+                      if (likesRequest.readyState === XMLHttpRequest.DONE) {
+                        if (likesRequest.status === 200) {
+                          var responseData = JSON.parse(likesRequest.responseText);
+                          var tmp=responseData.id;
+                          if(tmp=="1"){
+                            liked=true;
+                            imgLike.src="src/like1.png";
+                          }
+                          else{
+                            liked=false;
+                            imgLike.src="src/like0.png";
+                          }
+                          //test
+                          //textSearch.innerHTML=tmp;
+                          //textSearch.innerHTML=username+" "+name+" "+videoID;
+                        } else {
+                          console.error('请求失败');
+                        }
+                      }
+                    };
+                    likesRequest.open('GET', 'getLikesState.php?name='+name+'&videoID='+videoID, true);
+                    likesRequest.send();
                   }
                   function updateLikes(likes){
                     document.getElementById("numLikes").innerText=String(likes);
@@ -372,7 +397,6 @@
                       imgLike.src="src/like0.png";
                     }
                     updateLikes(likes);
-                    updateLikesState();
                   });
                 </script>
             </div>
@@ -466,17 +490,18 @@
           if (xhr.status === 200) {
             var responseData = JSON.parse(xhr.responseText);
             //console.log(responseData);
+            getUsername();
+            getName();
             videoID=responseData.id;
             videoSource.src=responseData.url;
             likes=responseData.likes;
             updateLikes(likes);
-            updateLikesState();
+            initLikesState();
             video.pause();
             video.load();
             video.play();
             changeCommentPage(responseData.id);
             changeVideoTags(responseData.channel);
-            getUsername();
           } else {
             console.error('请求失败');
           }
