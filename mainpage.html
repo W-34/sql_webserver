@@ -261,6 +261,9 @@
               var video=document.getElementById('video');
               var videoSource=document.getElementById('videoSource');
               var videoID=11;
+              function getCurrentVideoID(){
+                return videoID;
+              }
             </script>
         </div>
         <div class="middle-right">
@@ -315,14 +318,15 @@
                           var responseData = JSON.parse(usernameRequest.responseText);
                           username=responseData.username;
                           //test
-                          textSearch.innerHTML=username;
+                          //textSearch.innerHTML=username;
                         } else {
                           console.error('请求失败');
                         }
                       }
                     };
-                    usernameRequest.open('GET', 'getUsername.php?token='+token, true);
+                    usernameRequest.open('GET', 'getUsername.php?token='+token.innerHTML, true);
                     usernameRequest.send();
+                    //textSearch.innerHTML=token.innerHTML;
                   }
                   function getName(){
                     // 获取 <iframe> 元素
@@ -337,7 +341,7 @@
                           var responseData = JSON.parse(nameRequest.responseText);
                           name=responseData.name;
                           //test
-                          textSearch.innerHTML=name;
+                          //textSearch.innerHTML=name;
                         } else {
                           console.error('请求失败');
                         }
@@ -471,7 +475,8 @@
             video.load();
             video.play();
             changeCommentPage(responseData.id);
-            changeVideoTags(responseData.channel)
+            changeVideoTags(responseData.channel);
+            getUsername();
           } else {
             console.error('请求失败');
           }
