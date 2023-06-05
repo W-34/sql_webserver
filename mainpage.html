@@ -211,7 +211,7 @@
             <!-- <p>个人页</p> -->
             <img src="src/user_Me.png" alt="我的用户头像" width="70" height="70"><br>
             <script>
-              function getMyPage(){
+              function getMyPng(){
                 var myPageRequest = new XMLHttpRequest();
                 myPageRequest.onreadystatechange = function() {
                   if (myPageRequest.readyState === XMLHttpRequest.DONE) {
@@ -224,13 +224,16 @@
                     }
                   }
                 };
-                myPageRequest.open('GET', 'getRandomVideo.php', true);
+                myPageRequest.open('GET', 'getMyPng.php', true);
                 myPageRequest.send();
               }
             </script>
         </div>
         <div class="search">
-            <p>搜索</p>
+            <p id="textSearch">搜索</p>
+            <script>
+              var textSearch=document.getElementById('textSearch');
+            </script>
         </div>
         <div class="close">
             <p>关闭</p>
@@ -242,7 +245,10 @@
     <div class="middle">
         <div class="middle-left">
             <!-- <p>个人页</p> -->
-            <iframe src="login_new.php" width="140" height="710"></iframe>
+            <iframe id="myPage" src="login_new.php" width="140" height="710"></iframe>
+            <script>
+              var username;
+            </script>
         </div>
         <div class="videostream">
             <!-- <p>视频流</p> -->
@@ -296,10 +302,60 @@
                 <br>
                 <b>Count: </b><b id="numLikes">0</b>
                 <script>
+                  function getUsername(){
+                    // 获取 <iframe> 元素
+                    var myPage = document.getElementById("myPage");
+                    // 获取 <iframe> 中的文档对象
+                    var myPageDocument = myPage.contentDocument || myPage.contentWindow.document;
+                    var token=myPageDocument.getElementById("token");
+                    var usernameRequest = new XMLHttpRequest();
+                    usernameRequest.onreadystatechange = function() {
+                      if (usernameRequest.readyState === XMLHttpRequest.DONE) {
+                        if (usernameRequest.status === 200) {
+                          var responseData = JSON.parse(usernameRequest.responseText);
+                          username=responseData.username;
+                          //test
+                          textSearch.innerHTML=username;
+                        } else {
+                          console.error('请求失败');
+                        }
+                      }
+                    };
+                    usernameRequest.open('GET', 'getUsername.php?token='+token, true);
+                    usernameRequest.send();
+                  }
+                  function getName(){
+                    // 获取 <iframe> 元素
+                    var myPage = document.getElementById("myPage");
+                    // 获取 <iframe> 中的文档对象
+                    var myPageDocument = myPage.contentDocument || myPage.contentWindow.document;
+                    var token=myPageDocument.getElementById("token");
+                    var nameRequest = new XMLHttpRequest();
+                    nameRequest.onreadystatechange = function() {
+                      if (nameRequest.readyState === XMLHttpRequest.DONE) {
+                        if (nameRequest.status === 200) {
+                          var responseData = JSON.parse(nameRequest.responseText);
+                          name=responseData.name;
+                          //test
+                          textSearch.innerHTML=name;
+                        } else {
+                          console.error('请求失败');
+                        }
+                      }
+                    };
+                    nameRequest.open('GET', 'getName.php?token='+token, true);
+                    nameRequest.send();
+                  }
                   //var buttonLike=document.getElementById('buttonLike');
                   var imgLike=document.getElementById('imgLike');
                   var likes=Number(document.getElementById('numLikes').innerHTML);
                   var liked=false;
+                  function updateLikesState(){
+      
+                  }
+                  function updateLikes(likes){
+                    document.getElementById("numLikes").innerText=String(likes);
+                  }
                   imgLike.addEventListener('click',function(event){
                     if(liked==false){
                       liked=true;
@@ -311,7 +367,8 @@
                       likes--;
                       imgLike.src="src/like0.png";
                     }
-                    document.getElementById("numLikes").innerText=String(likes);
+                    updateLikes(likes);
+                    updateLikesState();
                   });
                 </script>
             </div>
@@ -407,6 +464,9 @@
             //console.log(responseData);
             videoID=responseData.id;
             videoSource.src=responseData.url;
+            likes=responseData.likes;
+            updateLikes(likes);
+            updateLikesState();
             video.pause();
             video.load();
             video.play();
@@ -421,13 +481,8 @@
       xhr.send();
     }
     var buttonNextVideo=document.getElementById('buttonNextVideo');
-    //var nextVideo=getNextVideo();
     buttonNextVideo.addEventListener('click',function(event){
       getNextVideo();
-      //videoSource.src=nextVideo;
-      //video.pause();
-      //video.load();
-      //video.play();
     });
   </script>
     <footer>

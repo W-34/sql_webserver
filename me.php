@@ -49,7 +49,7 @@
                     while ($row = mysqli_fetch_assoc($result)) {
                         $username0=$row['username'];
                         $randomStr=generateRandomString();
-                        $query2='insert into token(username,data) value(\''.$username0.'\',\''.$randomStr.'\')';
+                        $query2='insert into token(username,name,data) value(\''.$username0.'\',\''.$row['name'].'\',\''.$randomStr.'\')';
                         $conn2->query($query2);
                         printf("<p>昵称：%s</p>",$row['name']);
                         printf('<p>更多信息..</p>');
