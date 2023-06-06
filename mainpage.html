@@ -36,7 +36,7 @@
               }
               .search{
                 float: left;
-                width: 1400px;
+                width: 1338px;
                 border-style: solid;
                 border-width: 2px;
                 border-color: red;
@@ -44,7 +44,7 @@
               }
               .states{
                 float: right;
-                width: 160px;
+                width: 204px;
                 border-style: solid;
                 border-width: 2px;
                 border-color: red;
@@ -52,6 +52,7 @@
               }
               .close{
                 float: right;
+                width: 63px;
                 border-style: solid;
                 border-width: 2px;
                 border-color: red;
@@ -72,7 +73,7 @@
                 height: 720px;
                 background-color: green;
                 border-style: solid;
-                border-width: 5px;
+                border-width: 2px;
                 border-color: #FFA500;
               }
               .videostream{
@@ -236,16 +237,18 @@
             </script>
         </div>
         <div class="close">
-            <p>关闭</p>
+            <!-- <p>关闭</p> -->
+            <img id="imgClose" src="src/close.png" alt="">
         </div>
         <div class="states">
-            <p>状态栏</p>
+            <!-- <p>状态栏</p> -->
+            <img id="imgStates" src="src/states.png">
         </div>
     </div>
     <div class="middle">
         <div class="middle-left">
             <!-- <p>个人页</p> -->
-            <iframe id="myPage" src="login_new.php" width="140" height="710"></iframe>
+            <iframe id="myPage" src="login_new.php" width="146" height="716"></iframe>
             <script>
               var username;
               var name;
@@ -304,7 +307,7 @@
                 <!-- <button id="buttonLike" style="width: 76px;height: 76px;"></button> -->
                 <img id="imgLike" src="src/like0.png">
                 <br>
-                <b>Count: </b><b id="numLikes">0</b>
+                <b>Count: </b><b id="numLikes">1</b>
                 <script>
                   function getUsername(){
                     // 获取 <iframe> 元素
@@ -325,8 +328,13 @@
                         }
                       }
                     };
-                    usernameRequest.open('GET', 'getUsername.php?token='+token.innerHTML, true);
-                    usernameRequest.send();
+                    if(token!=null){
+                      usernameRequest.open('GET', 'getUsername.php?token='+token.innerHTML, true);
+                      usernameRequest.send();
+                    }
+                    else{
+                      username=null;
+                    }
                     //textSearch.innerHTML=token.innerHTML;
                   }
                   function getName(){
@@ -348,8 +356,13 @@
                         }
                       }
                     };
-                    nameRequest.open('GET', 'getName.php?token='+token.innerHTML, true);
-                    nameRequest.send();
+                    if(token!=null){
+                      nameRequest.open('GET', 'getName.php?token='+token.innerHTML, true);
+                      nameRequest.send();
+                    }
+                    else{
+                      name=null;
+                    }
                   }
                   //var buttonLike=document.getElementById('buttonLike');
                   var imgLike=document.getElementById('imgLike');
@@ -402,9 +415,50 @@
             </div>
             <!-- 评论区页面 -->
             <div class="sidebar" id="sidebar">
-              <iframe id="commentPage" src="comment.php?videoID=11" frameborder="0" width="300" height="900"></iframe>
+              <iframe id="commentPage" src="comment.php?videoID=11"
+               frameborder="0" width="300" height="700"></iframe>
+              <div class="writeComment" id="writeComment">
+                <form id="commentForm" action="writeComment.php" method="post" style="text-align:start;" width="300" height="200">
+                  发表评论: <br>
+                  <input type="" name="commentText" style="height:80px;width:250px;" 
+                  maxlength="200" placeholder="write your comment here"><br>
+                  <!-- <input type="submit" value="登录" width="50px" height="50px" style="text-align:center"> -->
+                 <input type="hidden" id="tokenForComment" name="token" value=""> 
+                 <input type="hidden" id="videoIDForComment" name="videoID" value="">
+                </form>
+                  <button id="submitComment">提交</button>
+              </div> 
               <script>
                 var commentPage=document.getElementById('commentPage');
+                var submitComment=document.getElementById('submitComment');
+                var commentForm = document.getElementById('commentForm');
+                var tokenForComment=document.getElementById('tokenForComment');
+                var videoIDForComment=document.getElementById('videoIDForComment');
+                var submitComment=document.getElementById('submitComment');
+                submitComment.addEventListener('click', function(event) {
+                  // 获取 <iframe> 元素
+                  var myPage = document.getElementById("myPage");
+                  // 获取 <iframe> 中的文档对象
+                  var myPageDocument = myPage.contentDocument || myPage.contentWindow.document;
+                  var token=myPageDocument.getElementById("token");
+                  tokenForComment.value=token.innerText;
+                  videoIDForComment.value=videoID;
+                  //test
+                  //textSearch.innerHTML=token.innerText;
+                  var commentFormData = new FormData(commentForm);
+                  var xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange =function(){
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                      if (xhr.status === 200) {
+                        commentPage.contentWindow.location.reload();
+                      } else {
+                        console.error('请求失败');
+                      }
+                    }
+                  };
+                  xhr.open('POST', 'writeComment.php');
+                  xhr.send(commentFormData);
+                });
               </script>
             </div>
             <div class="comment">

@@ -1,28 +1,31 @@
-<html>
-    <head>
+<html style="width:134;height:690px;">
+    <head style="background-color:#FFD700;width:120px;height:640px;">
         <title>注册到w34's mysql</title>
         <h2 style="text-align:center">欢迎新用户！</h1>
+        <!-- <script>
+            location.reload(true);
+        </script> -->
     </head>
-    <body style="background-color:#FFD700;">
-        <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div>
-        <div id='signup' style="width:400;height:100px;float:left;">
-            <form action="addUser.php" method="post" style="text-align:end;" width="300" height="200">
-            注册邮箱: <input id="username" type="text" name="username">
+    <body style="background-color:#FFD700;width:130px;height:640px;">
+        <!-- <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div> -->
+        <div id='signup' style="width:130;height:300px;float:left;">
+            <form action="addUser.php" method="post" style="text-align:left" width="120" height="300">
+            注册邮箱:<br> <input id="username" type="text" name="username" style="width: 100px;">
             <p id="usernameFormatError" style="display:none;color:red">请输入正确的邮箱</p><br>
             <!-- <div style="height:30px;width:3px;float:left;"></div> -->
-            密码: <input id="password" type="password" name="password">
+            密码:<br> <input id="password" type="password" name="password" style="width: 100px;">
             <p id="passwordFormatError" style="display:none;color:red">密码格式错误，只能包含大小写字母、数字和这些特殊字符：!@#$%^&*</p>
             <p id="passwordLengthError" style="display:none;color:red">密码长度为6到20个字符</p>
             <br>
-            确认密码: <input id="passwordDup" type="password" name="passwordDup">
+            确认密码:<br> <input id="passwordDup" type="password" name="passwordDup" style="width: 100px;">
             <p id="passwordDupError" style="display:none;color:red">密码不一致</p><br>
-            申请成为视频创作者：<input type="checkbox" id="becomeAuthor" name="becomeAuthor" value=1><br>
-            <div style="height:30px;width:100px;float:left;"></div>
+            视频创作者：<input type="checkbox" id="becomeAuthor" name="becomeAuthor" value=1><br>
+            <!-- <div style="height:30px;width:100px;float:left;"></div> -->
             </form>
-            <div id="none" style="background-color:#FFD700;height:30px;width:180px;float:left;"></div>
+            <div id="none" style="background-color:#FFD700;height:30px;width:40px;float:left;"></div>
             <button id="submitForm">注册</button>
         </div>
-        <div id="none" style="background-color:#FFD700;height:150px;width:600px;float:left;"></div>
+        <!-- <div id="none" style="background-color:#FFD700;height:150px;width:600px;float:left;"></div> -->
         <script>
             var form = document.querySelector('form');
             var username = document.getElementById('username');
@@ -42,16 +45,19 @@
                 } else {
                     usernameErrorMessage.style.display='block';
                     username.value="";
+                    usernameOK=false,passwordOK=false,passwordDupOK=false;
                 }
                 if(password.value.length<6||password.value.length>20){
                     passwordLengthErrorMessage.style.display='block';
                     password.value="";
                     passwordDup.value="";
+                    usernameOK=false,passwordOK=false,passwordDupOK=false;
                 }
                 else if (!passwordRegex.test(password.value)) {
                     passwordErrorMessage.style.display='block';
                     password.value="";
                     passwordDup.value="";
+                    usernameOK=false,passwordOK=false,passwordDupOK=false;
                 } else {
                     passwordOK=true;
                 }
@@ -61,6 +67,7 @@
                     passwordDupErrorMessage.style.display='block';
                     //password.value="";
                     passwordDup.value="";
+                    usernameOK=false,passwordOK=false,passwordDupOK=false;
                 }
                 if(usernameOK&&passwordOK&&passwordDupOK){
                     form.submit();
@@ -91,8 +98,8 @@
             });
             */
         </script>
-        <p></p>
-        <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
-            版权所有 © w34</div>
+        <!-- <p></p> -->
+        <!-- <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+            版权所有 © w34</div> -->
     </body>
 </html>

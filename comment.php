@@ -10,7 +10,7 @@
         return $str;     
     }     
     ?>
-<html style="width:300px;height:900px">
+<html style="width:270px;height:700px">
     <?php
         // $username = $_POST["username"];
         // $password = $_POST["password"];
