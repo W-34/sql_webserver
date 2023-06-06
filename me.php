@@ -1,4 +1,4 @@
-<html style="width:140px;height:710px">
+<html style="width:134;height:690px;">
     <head>
         <style>
             * {
@@ -35,12 +35,12 @@
                 $login=1;
             }
         ?>
-        <div id='myname' style="width:140px;height:710px">
+        <div id='myname' style="width:130px;height:680px">
             <?php
                 $conn2 = new mysqli($servername, $sql_username, $sql_password, $dbname);
                 if($login==1){
                     $myname='w34';
-                    echo '<h2>这是我!</h2><hr>';
+                    echo '<h3>我的个人页</h3><hr>';
                     $query='select username,name from user where username=\''.$username.'\'';
                     $result= $conn2->query($query);
                     if ($conn2->error){
@@ -51,8 +51,8 @@
                         $randomStr=generateRandomString();
                         $query2='insert into token(username,name,data) value(\''.$username0.'\',\''.$row['name'].'\',\''.$randomStr.'\')';
                         $conn2->query($query2);
-                        printf("<p>昵称：%s</p>",$row['name']);
-                        printf('<p>更多信息..</p>');
+                        printf("<p style=\"width:100px\">昵称：%s</p>",$row['name']);
+                        // printf('<p>更多信息..</p>');
                         break;
                     }
                     // echo '';

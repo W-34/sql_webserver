@@ -1,14 +1,14 @@
 <html style="width:134;height:690px;">
     <head style="background-color:#FFD700;width:120px;height:640px;">
         <title>注册到w34's mysql</title>
-        <h2 style="text-align:center">欢迎新用户！</h1>
+        <h4 style="text-align:center">欢迎新用户！</h1>
         <!-- <script>
             location.reload(true);
         </script> -->
     </head>
     <body style="background-color:#FFD700;width:130px;height:640px;">
         <!-- <div id="none" style="background-color:#FFD700;height:450px;width:600px;float:left;"></div> -->
-        <div id='signup' style="width:130;height:300px;float:left;">
+        <div id='signup' style="width:130;height:200px;float:left;">
             <form action="addUser.php" method="post" style="text-align:left" width="120" height="300">
             注册邮箱:<br> <input id="username" type="text" name="username" style="width: 100px;">
             <p id="usernameFormatError" style="display:none;color:red">请输入正确的邮箱</p><br>
@@ -25,6 +25,7 @@
             <div id="none" style="background-color:#FFD700;height:30px;width:40px;float:left;"></div>
             <button id="submitForm">注册</button>
         </div>
+        <a href="login_new.php">返回登录页</a>
         <!-- <div id="none" style="background-color:#FFD700;height:150px;width:600px;float:left;"></div> -->
         <script>
             var form = document.querySelector('form');
