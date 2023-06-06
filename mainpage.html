@@ -398,16 +398,66 @@
                   function updateLikes(likes){
                     document.getElementById("numLikes").innerText=String(likes);
                   }
+                  function insertLike(videoID){
+                    var myPage = document.getElementById("myPage");
+                    var myPageDocument = myPage.contentDocument || myPage.contentWindow.document;
+                    var token=myPageDocument.getElementById("token");
+                    var insertLikesRequest = new XMLHttpRequest();
+                    insertLikesRequest.onreadystatechange = function() {
+                      if (insertLikesRequest.readyState === XMLHttpRequest.DONE) {
+                        if (insertLikesRequest.status === 200) {
+                          var responseData = JSON.parse(insertLikesRequest.responseText);
+                          var tmp=responseData.id;
+                          if(tmp=="ok"){
+                            likes++;
+                            updateLikes(likes);
+                          }
+                          //test
+                          //textSearch.innerHTML=tmp;
+                        } else {
+                          console.error('请求失败');
+                        }
+                      }
+                    };
+                    insertLikesRequest.open('GET', 'insertLikes.php?token='+token.innerText+'&videoID='+videoID, true);
+                    insertLikesRequest.send();
+                  }
+                  function cancelLike(videoID){
+                    var myPage = document.getElementById("myPage");
+                    var myPageDocument = myPage.contentDocument || myPage.contentWindow.document;
+                    var token=myPageDocument.getElementById("token");
+                    var cancelLikesRequest = new XMLHttpRequest();
+                    cancelLikesRequest.onreadystatechange = function() {
+                      if (cancelLikesRequest.readyState === XMLHttpRequest.DONE) {
+                        if (cancelLikesRequest.status === 200) {
+                          var responseData = JSON.parse(cancelLikesRequest.responseText);
+                          var tmp=responseData.id;
+                          if(tmp=="ok"){
+                            likes--;
+                            updateLikes(likes);
+                          }
+                          //test
+                          //textSearch.innerHTML=tmp;
+                        } else {
+                          console.error('请求失败');
+                        }
+                      }
+                    };
+                    cancelLikesRequest.open('GET', 'cancelLikes.php?token='+token.innerText+'&videoID='+videoID, true);
+                    cancelLikesRequest.send();
+                  }
                   imgLike.addEventListener('click',function(event){
                     if(liked==false){
                       liked=true;
                       likes++;
                       imgLike.src="src/like1.png";
+                      insertLike(videoID)
                     }
                     else{
                       liked=false;
                       likes--;
                       imgLike.src="src/like0.png";
+                      cancelLike(videoID);
                     }
                     updateLikes(likes);
                   });
